@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduNaukri — Admin Login</title>
+<!-- Load Supabase for future authentication -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  /* Base EduNaukri Theme Variables */
+  :root {
+    --blue: #0757d9;
+    --navy: #071b4b;
+    --orange: #ff6a00;
+    --bg: #f5f8fc;
+    --text: #172033;
+    --border: #e6ebf2;
+    --muted: #667085;
+  }
+  
+  * { box-sizing: border-box; }
+  body { 
+    margin: 0; 
+    font-family: Inter, Arial, sans-serif; 
+    color: var(--text); 
+    background: var(--bg); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+  }
+  
+  .login-container { 
+    background: #fff; 
+    padding: 40px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px #102a4308; 
+    border: 1px solid var(--border); 
+    width: 100%; 
+    max-width: 400px; 
+  }
+  
+  .brand { 
+    text-align: center; 
+    font-weight: 800; 
+    font-size: 28px; 
+    color: var(--blue); 
+    margin-bottom: 35px; 
+    text-decoration: none; 
+    display: block; 
+  }
+  .brand span { color: var(--orange); }
+  
+  .form-group { margin-bottom: 22px; }
+  .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+  .form-group input { 
+    width: 100%; 
+    padding: 14px; 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    font-size: 15px; 
+    outline: none; 
+    background: var(--bg); 
+    transition: border 0.2s; 
+  }
+  .form-group input:focus { border-color: var(--blue); }
+  
+  .btn { 
+    background: var(--blue); 
+    color: #fff; 
+    border: none; 
+    padding: 15px; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    width: 100%; 
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background 0.2s; 
+  }
+  .btn:hover { background: var(--navy); }
+  
+  .error-message { 
+    color: #e92738; 
+    font-size: 14px; 
+    text-align: center; 
+    margin-top: 15px; 
+    display: none; 
+    font-weight: 600;
+  }
+  
+  .back-link { 
+    display: block; 
+    text-align: center; 
+    margin-top: 25px; 
+    font-size: 14px; 
+    color: var(--muted); 
+    text-decoration: none; 
+  }
+  .back-link:hover { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <a href="index.html" class="brand">Edu<span>Naukri</span></a>
+  
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">Admin Email</label>
+      <input type="email" id="email" placeholder="admin@edunaukri.com" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••" required>
+    </div>
+    
+    <button type="submit" class="btn">Secure Login</button>
+    <div id="errorMessage" class="error-message">❌ Invalid email or password.</div>
+  </form>
+  
+  <a href="index.html" class="back-link">← Back to Home</a>
+</div>
+<script>
+  // 1. Initialize Supabase Connection
+  const SUPABASE_URL = 'https://coeemddusgoafawggwsl.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('errorMessage');
+    const submitBtn = document.querySelector('.btn');
+    
+    // UI Loading state
+    submitBtn.innerText = 'Verifying...';
+    submitBtn.disabled = true;
+    errorMsg.style.display = 'none';
+    
+    try {
+        // 2. Attempt to sign in with Supabase
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (error) throw error;
+
+        // 3. Success! Supabase automatically saves the session token in the browser.
+        window.location.href = 'admin.html';
+        
+    } catch (error) {
+        // Show error message (e.g., wrong password)
+        errorMsg.innerText = '❌ ' + error.message;
+        errorMsg.style.display = 'block';
+        
+        // Reset button
+        submitBtn.innerText = 'Secure Login';
+        submitBtn.disabled = false;
+    }
+  });
+</script>
+
+  
+</body>
+</html>

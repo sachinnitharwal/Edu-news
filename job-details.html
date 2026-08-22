@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Details — EduNaukri</title>
+<link rel="stylesheet" href="style.css">
+<!-- Load the official Supabase library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+    /* Styling specifically for the details page content area */
+    .details-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px #102a4308;
+        border: 1px solid var(--border);
+        min-height: 50vh;
+    }
+    
+    .job-header {
+        border-bottom: 2px solid var(--border);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    .job-title {
+        font-size: 28px;
+        color: var(--navy);
+        margin: 0 0 10px 0;
+        line-height: 1.4;
+    }
+
+    .job-meta {
+        font-size: 14px;
+        color: var(--muted);
+        display: flex;
+        gap: 15px;
+    }
+
+    .meta-tag {
+        background: var(--bg);
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        font-weight: 600;
+    }
+
+    /* Styles for the HTML content injected from the database */
+    .job-content {
+        line-height: 1.8;
+        color: var(--text);
+        font-size: 16px;
+    }
+    
+    .job-content h2, .job-content h3 {
+        color: var(--blue);
+        margin-top: 30px;
+    }
+    
+    .job-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    
+    .job-content th, .job-content td {
+        border: 1px solid var(--border);
+        padding: 12px;
+        text-align: left;
+    }
+    
+    .job-content th {
+        background: var(--bg);
+        color: var(--navy);
+    }
+    
+    /* Loading and Error states */
+    .status-msg {
+        text-align: center;
+        font-size: 18px;
+        color: var(--muted);
+        padding: 50px 0;
+    }
+    
+    .back-btn {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: var(--blue);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .back-btn:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
+  <div class="menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#jobs">Government Jobs</a>
+  </div>
+</nav>
+
+<main class="container">
+    <div class="details-container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        
+        <!-- Loading State -->
+        <div id="loading" class="status-msg">Loading details...</div>
+        
+        <!-- Error State -->
+        <div id="errorMsg" class="status-msg" style="display: none; color: #e92738;"></div>
+        
+        <!-- Main Content Area (Hidden until loaded) -->
+        <div id="postContainer" style="display: none;">
+            <div class="job-header">
+                <h1 class="job-title" id="displayTitle"></h1>
+                <div class="job-meta">
+                    <span class="meta-tag" id="displayCategory"></span>
+                    <span class="meta-tag" id="displayState"></span>
+                    <span class="meta-tag" id="displayDate"></span>
+                </div>
+            </div>
+            
+            <!-- This is where the raw HTML from your admin panel will be injected -->
+            <div class="job-content" id="displayContent"></div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>
+</footer>
+
+<script>
+    // 1. Initialize Supabase
+    const SUPABASE_URL = 'https://coeemddusgoafawggwsl.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 2. Fetch the ID from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    async function fetchPostDetails() {
+        const loading = document.getElementById('loading');
+        const errorMsg = document.getElementById('errorMsg');
+        const postContainer = document.getElementById('postContainer');
+
+        if (!postId) {
+            loading.style.display = 'none';
+            errorMsg.innerText = "Error: No job ID provided.";
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        try {
+            // 3. Query the database for this specific ID
+            const { data, error } = await supabaseClient
+                .from('jobs')
+                .select('*')
+                .eq('id', postId)
+                .single(); // Use .single() because we only expect one row
+
+            if (error) throw error;
+
+            // 4. Populate the HTML elements with the retrieved data
+            document.title = `${data.title} — EduNaukri`;
+            
+            document.getElementById('displayTitle').innerText = data.title;
+            document.getElementById('displayCategory').innerText = `📂 ${data.category.toUpperCase().replace('-', ' ')}`;
+            document.getElementById('displayState').innerText = `📍 ${data.state.toUpperCase()}`;
+            
+            const dateStr = new Date(data.created_at).toLocaleDateString('en-IN', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+            document.getElementById('displayDate').innerText = `📅 ${dateStr}`;
+            
+            // Inject the raw HTML content!
+            document.getElementById('displayContent').innerHTML = data.content_html;
+
+            // Hide loading, show content
+            loading.style.display = 'none';
+            postContainer.style.display = 'block';
+
+        } catch (error) {
+            console.error("Error fetching post details:", error);
+            loading.style.display = 'none';
+            errorMsg.innerText = "Error: Post not found or has been removed.";
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    // Run the fetch function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchPostDetails);
+</script>
+</body>
+</html>
