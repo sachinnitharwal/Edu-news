@@ -8,16 +8,16 @@
 <!-- Load the official Supabase library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-    /* Styling specifically for the details page content area */
+    /* Details Page Content Area */
     .details-container {
-        max-width: 900px;
-        margin: 40px auto;
+        width: 100%; /* Expands to fill the container */
         background: #fff;
-        padding: 40px;
+        padding: 40px 50px;
         border-radius: 12px;
         box-shadow: 0 4px 15px #102a4308;
         border: 1px solid var(--border);
         min-height: 50vh;
+        margin-top: 20px;
     }
     
     .job-header {
@@ -27,9 +27,9 @@
     }
 
     .job-title {
-        font-size: 28px;
+        font-size: 32px;
         color: var(--navy);
-        margin: 0 0 10px 0;
+        margin: 0 0 15px 0;
         line-height: 1.4;
     }
 
@@ -37,15 +37,19 @@
         font-size: 14px;
         color: var(--muted);
         display: flex;
+        flex-wrap: wrap;
         gap: 15px;
     }
 
     .meta-tag {
         background: var(--bg);
-        padding: 5px 10px;
+        padding: 6px 12px;
         border-radius: 6px;
         border: 1px solid var(--border);
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
     }
 
     /* Styles for the HTML content injected from the database */
@@ -55,29 +59,37 @@
         font-size: 16px;
     }
     
+    .job-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+    
     .job-content h2, .job-content h3 {
         color: var(--blue);
-        margin-top: 30px;
+        margin-top: 35px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
     }
     
     .job-content table {
         width: 100%;
         border-collapse: collapse;
-        margin: 20px 0;
+        margin: 25px 0;
     }
     
     .job-content th, .job-content td {
         border: 1px solid var(--border);
-        padding: 12px;
+        padding: 14px;
         text-align: left;
     }
     
     .job-content th {
         background: var(--bg);
         color: var(--navy);
+        font-weight: 700;
     }
     
-    /* Loading and Error states */
     .status-msg {
         text-align: center;
         font-size: 18px;
@@ -87,25 +99,54 @@
     
     .back-btn {
         display: inline-block;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         color: var(--blue);
-        font-weight: 600;
+        font-weight: 700;
         text-decoration: none;
+        font-size: 15px;
     }
     
     .back-btn:hover {
         text-decoration: underline;
     }
+
+    /* Mobile Responsive Adjustments */
+    @media(max-width: 768px) {
+        .details-container {
+            padding: 25px 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+        .job-title {
+            font-size: 24px;
+        }
+        .job-content table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
 </style>
 </head>
 <body>
+
+<!-- Top Bar -->
+<div class="top">
+  <div>✉ info@edunaukri.com &nbsp; • &nbsp; ☎ +91 98765 43210</div>
+  <div>Follow us: Facebook · YouTube · Telegram</div>
+</div>
 
 <!-- Navigation -->
 <nav class="nav">
   <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
   <div class="menu">
     <a href="index.html">Home</a>
-    <a href="index.html#jobs">Government Jobs</a>
+    <a href="index.html#jobs">Government Jobs ▾</a>
+    <a href="index.html#jobs">Private Jobs ▾</a>
+    <a href="index.html#categories">Rajasthan Jobs</a>
+    <a href="index.html#categories">Central Jobs ▾</a>
+    <a href="index.html#updates">Admit Card</a>
+    <a href="index.html#updates">Result</a>
   </div>
 </nav>
 
@@ -119,7 +160,7 @@
         <!-- Error State -->
         <div id="errorMsg" class="status-msg" style="display: none; color: #e92738;"></div>
         
-        <!-- Main Content Area (Hidden until loaded) -->
+        <!-- Main Content Area -->
         <div id="postContainer" style="display: none;">
             <div class="job-header">
                 <h1 class="job-title" id="displayTitle"></h1>
@@ -130,7 +171,7 @@
                 </div>
             </div>
             
-            <!-- This is where the raw HTML from your admin panel will be injected -->
+            <!-- Raw HTML injected here -->
             <div class="job-content" id="displayContent"></div>
         </div>
     </div>
@@ -138,6 +179,24 @@
 
 <!-- Footer -->
 <footer class="footer">
+  <div class="footergrid">
+    <div>
+      <div class="brand" style="color: #fff;">🎓 Edu<span style="color: var(--orange);">Naukri</span></div>
+      <p>EduNaukri is your one-stop destination for latest job updates, admit card, results, notifications and more.</p>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <a href="#">About Us</a><br><a href="#">Contact Us</a><br><a href="#">Privacy Policy</a><br><a href="#">Terms & Conditions</a>
+    </div>
+    <div>
+      <h3>Important Links</h3>
+      <a href="index.html#jobs">Latest Notifications</a><br><a href="index.html#admit-cards">Admit Card</a><br><a href="index.html#results">Results</a><br><a href="index.html#answer-keys">Answer Key</a>
+    </div>
+    <div>
+      <h3>Popular Jobs</h3>
+      <a href="index.html#jobs">Rajasthan Police</a><br><a href="index.html#jobs">SSC CGL</a><br><a href="index.html#jobs">Railway Jobs</a><br><a href="index.html#jobs">Bank Jobs</a>
+    </div>
+  </div>
   <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>
 </footer>
 
@@ -164,16 +223,16 @@
         }
 
         try {
-            // 3. Query the database for this specific ID
+            // 3. Query the database
             const { data, error } = await supabaseClient
                 .from('jobs')
                 .select('*')
                 .eq('id', postId)
-                .single(); // Use .single() because we only expect one row
+                .single(); 
 
             if (error) throw error;
 
-            // 4. Populate the HTML elements with the retrieved data
+            // 4. Populate the HTML elements
             document.title = `${data.title} — EduNaukri`;
             
             document.getElementById('displayTitle').innerText = data.title;
@@ -185,10 +244,8 @@
             });
             document.getElementById('displayDate').innerText = `📅 ${dateStr}`;
             
-            // Inject the raw HTML content!
             document.getElementById('displayContent').innerHTML = data.content_html;
 
-            // Hide loading, show content
             loading.style.display = 'none';
             postContainer.style.display = 'block';
 
@@ -200,7 +257,6 @@
         }
     }
 
-    // Run the fetch function when the page loads
     document.addEventListener('DOMContentLoaded', fetchPostDetails);
 </script>
 </body>
