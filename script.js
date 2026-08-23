@@ -100,3 +100,31 @@ function subscribe(e) {
 document.addEventListener('DOMContentLoaded', () => {
     loadAllColumns();
 });
+// --- Mobile Hamburger Menu Logic ---
+const hamburger = document.getElementById('hamburgerMenu');
+const navMenu = document.getElementById('navMenu');
+
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        // Toggle the menu visibility
+        navMenu.classList.toggle('show-menu');
+        
+        // Change icon from Hamburger (☰) to Close (✕)
+        if (navMenu.classList.contains('show-menu')) {
+            hamburger.innerHTML = '✕';
+            hamburger.style.transform = 'rotate(90deg)';
+        } else {
+            hamburger.innerHTML = '☰';
+            hamburger.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    // Close the menu automatically when any link is clicked
+    document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('show-menu');
+            hamburger.innerHTML = '☰';
+            hamburger.style.transform = 'rotate(0deg)';
+        });
+    });
+}
