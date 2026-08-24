@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+        <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-50M8BHNJ46"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -69,11 +69,7 @@
         overflow-wrap: break-word;
     }
     
-    .job-content img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
+    .job-content img { max-width: 100%; height: auto; border-radius: 8px; }
     
     .job-content h2, .job-content h3 {
         color: var(--blue);
@@ -87,97 +83,96 @@
         width: 100%;
         border-collapse: collapse;
         margin: 25px 0;
-        table-layout: fixed; /* Helps force the table to stay within container */
-        word-wrap: break-word; /* Breaks long words if necessary */
+        table-layout: fixed; 
+        word-wrap: break-word; 
     }
+    .job-content th, .job-content td { border: 1px solid var(--border); padding: 14px; text-align: left; }
+    .job-content th { background: var(--bg); color: var(--navy); font-weight: 700; }
     
-    .job-content th, .job-content td {
-        border: 1px solid var(--border);
-        padding: 14px;
-        text-align: left;
+    .status-msg { text-align: center; font-size: 18px; color: var(--muted); padding: 50px 0; }
+    .back-btn { display: inline-block; margin-bottom: 25px; color: var(--blue); font-weight: 700; text-decoration: none; font-size: 15px; }
+    .back-btn:hover { text-decoration: underline; }
+
+    /* --- Related Jobs Section Styles --- */
+    .related-jobs {
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 2px dashed var(--border);
     }
-    
-    .job-content th {
-        background: var(--bg);
+    .related-jobs h3 {
         color: var(--navy);
+        font-size: 22px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 15px;
+    }
+    .related-card {
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 18px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    .related-card:hover {
+        background: #fff;
+        border-color: var(--blue);
+        box-shadow: 0 8px 20px rgba(7, 87, 217, 0.08);
+        transform: translateY(-3px);
+    }
+    .related-tag {
+        font-size: 11px;
+        background: #e2e8f0;
+        color: var(--navy);
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 10px;
         font-weight: 700;
     }
-    
-    .status-msg {
-        text-align: center;
-        font-size: 18px;
-        color: var(--muted);
-        padding: 50px 0;
+    .related-title {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.4;
+        margin: 0 0 15px 0;
+        color: #d11515; /* Matches homepage link red */
     }
-    
-    .back-btn {
-        display: inline-block;
-        margin-bottom: 25px;
+    .related-card:hover .related-title { color: var(--blue); }
+    .read-more {
+        font-size: 13px;
         color: var(--blue);
         font-weight: 700;
-        text-decoration: none;
-        font-size: 15px;
+        margin-top: auto;
     }
-    
-    .back-btn:hover {
-        text-decoration: underline;
-    }
+    .read-more::after { content: ' →'; }
 
-    /* Mobile Responsive Adjustments (Full Screen & Table Squeeze) */
+    /* Mobile Responsive Adjustments */
     @media(max-width: 768px) {
         body { background: #fff; } 
+        .container { padding: 0 !important; }
+        .details-container { padding: 20px 15px; margin-top: 0; border-radius: 0; border: none; box-shadow: none; }
+        .job-title { font-size: 24px; }
+        .job-content table { font-size: 12px; margin: 15px 0; }
+        .job-content th, .job-content td { padding: 6px 4px; overflow-wrap: break-word; word-break: break-all; }
         
-        /* Overrides the default .container padding from style.css */
-        .container { 
-            padding: 0 !important; 
-        }
-        
-        /* Remove the box look, make it flat and edge-to-edge */
-        .details-container {
-            padding: 20px 15px;
-            margin-top: 0;
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
-        }
-        
-        .job-title {
-            font-size: 24px;
-        }
-
-        /* Adjust Table for Mobile to avoid scrolling */
-        .job-content table {
-            font-size: 12px; /* Reduce font size significantly */
-            margin: 15px 0;
-        }
-
-        .job-content th, .job-content td {
-            padding: 6px 4px; /* Reduce padding drastically */
-        }
-        
-        /* Forces words to break instead of pushing the table off-screen */
-        .job-content td, .job-content th {
-            overflow-wrap: break-word;
-            word-break: break-all; 
-        }
+        .related-grid { grid-template-columns: 1fr; } /* Stack related jobs vertically on mobile */
     }
 </style>
 </head>
 <body>
 
-<!-- Top Bar -->
-<div class="top">
-  <div>✉ info@edunaukri.com &nbsp; • &nbsp; ☎ +91 98765 43210</div>
-  <div>Follow us: Facebook · YouTube · Telegram</div>
-</div>
-
-<!-- Navigation -->
-<!-- Navigation for Inner Pages (Details, About, Contact) -->
+<!-- Navigation for Inner Pages -->
 <nav class="nav">
   <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
-  
   <button class="hamburger" id="hamburgerMenu">☰</button>
-  
   <div class="menu" id="navMenu">
     <a href="index.html">Home</a>
     <a href="index.html#jobs">Latest Jobs</a>
@@ -212,30 +207,21 @@
             
             <!-- Raw HTML injected here -->
             <div class="job-content" id="displayContent"></div>
+
+            <!-- 🔥 Related Jobs Section (New) -->
+            <div class="related-jobs" id="relatedJobsSection" style="display: none;">
+                <h3>🔥 You May Also Like</h3>
+                <div class="related-grid" id="relatedGrid">
+                    <!-- Cards will be injected by JavaScript here -->
+                </div>
+            </div>
+
         </div>
     </div>
 </main>
 
 <!-- Footer -->
 <footer class="footer">
-  <div class="footergrid">
-    <div>
-      <div class="brand" style="color: #fff;">🎓 Edu<span style="color: var(--orange);">Naukri</span></div>
-      <p>EduNaukri is your one-stop destination for latest job updates, admit card, results, notifications and more.</p>
-    </div>
-    <div>
-      <h3>Quick Links</h3>
-      <a href="#">About Us</a><br><a href="#">Contact Us</a><br><a href="#">Privacy Policy</a><br><a href="#">Terms & Conditions</a>
-    </div>
-    <div>
-      <h3>Important Links</h3>
-      <a href="index.html#jobs">Latest Notifications</a><br><a href="index.html#admit-cards">Admit Card</a><br><a href="index.html#results">Results</a><br><a href="index.html#answer-keys">Answer Key</a>
-    </div>
-    <div>
-      <h3>Popular Jobs</h3>
-      <a href="index.html#jobs">Rajasthan Police</a><br><a href="index.html#jobs">SSC CGL</a><br><a href="index.html#jobs">Railway Jobs</a><br><a href="index.html#jobs">Bank Jobs</a>
-    </div>
-  </div>
   <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>
 </footer>
 
@@ -262,7 +248,7 @@
         }
 
         try {
-            // 3. Query the database
+            // 3. Query the database for current post
             const { data, error } = await supabaseClient
                 .from('jobs')
                 .select('*')
@@ -283,12 +269,13 @@
             });
             document.getElementById('displayDate').innerText = `📅 ${dateStr}`;
             
-            // Inject content directly (without adding scrolling wrappers)
             document.getElementById('displayContent').innerHTML = data.content_html;
 
-            // Show content
             loading.style.display = 'none';
             postContainer.style.display = 'block';
+
+            // 5. Fetch Related Jobs (🔥 NEW FEATURE)
+            fetchRelatedJobs(postId, data.category);
 
         } catch (error) {
             console.error("Error fetching post details:", error);
@@ -298,17 +285,45 @@
         }
     }
 
+    // Function to grab 3 other jobs from the database
+    async function fetchRelatedJobs(currentPostId, currentCategory) {
+        try {
+            // Fetch 3 latest jobs excluding the current one
+            const { data, error } = await supabaseClient
+                .from('jobs')
+                .select('id, title, category')
+                .neq('id', currentPostId)
+                .order('created_at', { ascending: false })
+                .limit(3);
+
+            if (error) throw error;
+
+            if (data && data.length > 0) {
+                const relatedGrid = document.getElementById('relatedGrid');
+                relatedGrid.innerHTML = data.map(job => `
+                    <a href="job-details.html?id=${job.id}" class="related-card">
+                        <span class="related-tag">${job.category.toUpperCase().replace('-', ' ')}</span>
+                        <h4 class="related-title">${job.title}</h4>
+                        <div class="read-more">View Details</div>
+                    </a>
+                `).join('');
+                
+                document.getElementById('relatedJobsSection').style.display = 'block';
+            }
+        } catch (error) {
+            console.error("Error fetching related jobs:", error);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', fetchPostDetails);
-        // --- Mobile Hamburger Menu Logic ---
+
+    // --- Mobile Hamburger Menu Logic ---
     const hamburger = document.getElementById('hamburgerMenu');
     const navMenu = document.getElementById('navMenu');
 
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
-            // Toggle the menu visibility
             navMenu.classList.toggle('show-menu');
-            
-            // Change icon from Hamburger (☰) to Close (✕)
             if (navMenu.classList.contains('show-menu')) {
                 hamburger.innerHTML = '✕';
                 hamburger.style.transform = 'rotate(90deg)';
@@ -318,7 +333,6 @@
             }
         });
 
-        // Close the menu automatically when any link is clicked
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('show-menu');
@@ -327,7 +341,6 @@
             });
         });
     }
-
 </script>
 </body>
 </html>
