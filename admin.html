@@ -125,6 +125,9 @@
         <option value="admit-cards">🪪 Admit Card</option>
         <option value="results">📊 Result</option>
         <option value="answer-keys">🔑 Answer Key</option>
+        <!-- New Categories Added -->
+        <option value="admission">🎓 Admission & Updates</option>
+        <option value="syllabus">📚 Syllabus</option>
       </select>
     </div>
 
@@ -137,6 +140,14 @@
       </select>
     </div>
 
+    <!-- NEW TAGS FIELD WITH INSTRUCTIONS -->
+    <div class="form-group">
+      <label for="postTags">Tags / Keywords (सर्च टैग्स)</label>
+      <input type="text" id="postTags" placeholder="e.g. police, constable, 12th pass">
+      <small style="color: #666; font-size: 13px; display: block; margin-top: 5px;">निर्देश: कॉमा (,) लगाकर वे शब्द लिखें जिन्हें यूज़र सर्च कर सकता है। इससे सर्च बार में यह पोस्ट आसानी से मिलेगी।</small>
+    </div>
+
+    <!-- NEW BADGE CHECKBOX (Kept safe) -->
     <div class="checkbox-group">
       <input type="checkbox" id="isNew">
       <label for="isNew" style="margin:0; color:#e92738; cursor: pointer;">Mark with "NEW" Badge</label>
@@ -230,7 +241,7 @@
   // We attach this directly to the window so the inline onclick="" attribute can find it
   window.deletePost = async function(id) {
       if (!confirm("Are you sure you want to delete this post? This cannot be undone.")) {
-          return; // User clicked Cancel
+          return; 
       }
 
       const { error } = await supabaseClient
@@ -257,10 +268,12 @@
     submitBtn.innerText = "Publishing...";
     status.innerText = "";
     
+    // Updated postData to include tags
     const postData = {
       title: document.getElementById('postTitle').value.trim(),
       category: document.getElementById('postCategory').value,
       state: document.getElementById('postState').value,
+      tags: document.getElementById('postTags').value.trim(), // <--- Tags Data Sent to Database
       is_new: document.getElementById('isNew').checked,
       content_html: document.getElementById('postContent').value.trim()
     };

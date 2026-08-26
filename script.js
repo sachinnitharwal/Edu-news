@@ -8,8 +8,11 @@ const categoryMapping = {
     'jobsList': 'jobs',
     'admitList': 'admit-cards',
     'resultList': 'results',
-    'answerList': 'answer-keys'
+    'answerList': 'answer-keys',
+    'admissionList': 'admission', // NEW
+    'syllabusList': 'syllabus'    // NEW
 };
+
 
 // Main function to fetch and render data for a specific column
 async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuery = '') {
