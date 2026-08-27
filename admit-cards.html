@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-50M8BHNJ46"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-50M8BHNJ46');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admit Cards — EduNaukri</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .page-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px #102a4308; border: 1px solid var(--border); min-height: 50vh; }
+    .page-title { font-size: 26px; color: var(--navy); margin: 0 0 25px 0; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+    .post-date { font-size: 12px; color: var(--muted); margin-top: 3px; display: block; margin-left: 20px; }
+    @media(max-width: 768px) { .page-container { padding: 25px 15px; margin-top: 0; border-radius: 0; border: none; box-shadow: none; } }
+  </style>
+</head>
+<body>
+<div class="top"><div>✉ deepak87419566@gmail.com &nbsp; • &nbsp; ☎ +9509018268</div><div>Follow us: · YouTube · Telegram</div></div>
+<nav class="nav">
+  <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
+  <div class="menu" id="navMenu">
+    <a href="index.html">Home</a><a href="index.html#jobs">Latest Jobs</a><a href="index.html#admit-cards">Admit Card</a><a href="index.html#results">Results</a><a href="index.html#answer-keys">Answer Key</a><a href="about.html">About</a><a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+<main class="container">
+  <div class="page-container">
+    <h1 class="page-title">🪪 All Admit Cards</h1>
+    <ul class="link-list" id="categoryList"><li style="padding: 14px 5px;">Loading updates...</li></ul>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footergrid">
+    <div><div class="brand" style="color: #fff;">🎓 Edu<span style="color: var(--orange);">Naukri</span></div><p>EduNaukri is your one-stop destination for latest job updates, admit card, results, notifications and more.</p></div>
+    <div><h3>Quick Links</h3><a href="about.html">About Us</a><br><a href="contact.html">Contact Us</a><br><a href="privacy.html">Privacy Policy</a><br><a href="privacy.html">Terms & Conditions</a><br><a href="login.html" style="display: inline-block; margin-top: 15px; background: var(--orange); color: #fff; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 13px;">🔒 Admin Panel</a></div>
+    <div><h3>Important Links</h3><a href="index.html#jobs">Latest Notifications</a><br><a href="index.html#admit-cards">Admit Card</a><br><a href="index.html#results">Results</a><br><a href="index.html#answer-keys">Answer Key</a></div>
+    <div><h3>Popular Jobs</h3><a href="index.html#jobs">Rajasthan Police</a><br><a href="index.html#jobs">SSC CGL</a><br><a href="index.html#jobs">Railway Jobs</a><br><a href="index.html#jobs">Bank Jobs</a></div>
+  </div>
+  <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>
+</footer>
+<script>
+    const supabaseClient = supabase.createClient('https://coeemddusgoafawggwsl.supabase.co', 'sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1');
+    const dbCategory = 'admit-cards'; 
+    async function fetchAllCategoryPosts() {
+        const listElement = document.getElementById('categoryList');
+        const { data, error } = await supabaseClient.from('jobs').select('id, title, created_at, is_new').eq('category', dbCategory).order('created_at', { ascending: false });
+        if (error) { listElement.innerHTML = '<li style="padding: 14px 5px; color: red;">Error loading data</li>'; return; }
+        if (data.length === 0) { listElement.innerHTML = '<li style="padding: 14px 5px; color: #667085;">No updates found for this category.</li>'; return; }
+        listElement.innerHTML = ''; 
+        data.forEach(post => {
+            const li = document.createElement('li');
+            const date = new Date(post.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+            const badge = post.is_new ? ' <span class="new-badge">NEW</span>' : '';
+            li.innerHTML = `<a href="job-details.html?id=${post.id}">${post.title} ${badge}</a><span class="post-date">Posted on: ${date}</span>`;
+            listElement.appendChild(li);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', fetchAllCategoryPosts);
+</script>
+</body>
+</html>

@@ -15,16 +15,18 @@ const categoryMapping = {
 
 
 // Main function to fetch and render data for a specific column
+// Main function to fetch and render data for a specific column
 async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuery = '') {
     const listElement = document.getElementById(listElementId);
     listElement.innerHTML = '<li style="padding: 14px 5px; font-size: 14px;">Loading...</li>';
     
-    // Start building the query
+    // Start building the query with a limit of 11 (to check if there are more than 10)
     let query = supabaseClient
         .from('jobs')
         .select('*')
         .eq('category', dbCategory)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(11); 
         
     // Apply state filter if not "all"
     if (stateFilter !== 'all') {
@@ -52,14 +54,44 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
         return;
     }
     
+    // Check if we have more than 10 posts
+    const hasMore = data.length > 10;
+    const postsToRender = hasMore ? data.slice(0, 10) : data; // Take only first 10
+    
     // Loop through the data and build list items
-    data.forEach(item => {
+    postsToRender.forEach(item => {
         const li = document.createElement('li');
         const badge = item.is_new ? ' <span class="new-badge">NEW</span>' : '';
         // Create link passing the post ID to a details page
         li.innerHTML = `<a href="job-details.html?id=${item.id}">${item.title}${badge}</a>`;
         listElement.appendChild(li);
     });
+
+    // Add "View All" button if there are more than 10 posts
+    if (hasMore) {
+        const btnLi = document.createElement('li');
+        btnLi.style.textAlign = 'center';
+        btnLi.style.borderBottom = 'none';
+        btnLi.style.paddingTop = '12px';
+        
+        // Convert category name to readable format (e.g., admit-cards -> ADMIT CARDS)
+        const readableCategory = dbCategory.replace('-', ' ').toUpperCase();
+        
+        // Map database categories to their future separate HTML pages
+        const pageURLs = {
+            'jobs': 'latest-jobs.html',
+            'admit-cards': 'admit-cards.html',
+            'results': 'results.html',
+            'answer-keys': 'answer-keys.html',
+            'admission': 'admission.html',
+            'syllabus': 'syllabus.html'
+        };
+        
+        const targetPage = pageURLs[dbCategory] || '#';
+        
+        btnLi.innerHTML = `<a href="${targetPage}" class="view-all-btn">View All ${readableCategory} ➔</a>`;
+        listElement.appendChild(btnLi);
+    }
 }
 
 // Loads all columns at once (used on page load or full search)
