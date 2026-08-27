@@ -772,3 +772,31 @@ a {
         /* Mobile screen par 1 column dikhega */
     }
 }
+
+/* --- View All Button Styles --- */
+.view-all-btn {
+    display: inline-block !important;
+    background: #f8fafc;
+    color: var(--blue) !important;
+    padding: 12px 20px !important;
+    border-radius: 8px;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-align: center;
+    transition: all 0.3s ease !important;
+    border: 1px solid var(--border);
+    width: 100%;
+}
+
+/* Hide the default orange arrow for this button */
+.view-all-btn::before {
+    display: none !important; 
+}
+
+.view-all-btn:hover {
+    background: var(--blue);
+    color: #fff !important;
+    border-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(7, 87, 217, 0.15);
+}
