@@ -44,6 +44,22 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
         console.error(`Error fetching ${dbCategory}:`, error);
         listElement.innerHTML = '<li style="padding: 14px 5px; font-size: 14px; color: red;">Error loading data</li>';
         return;
+            // Loop through the data and build list items
+    postsToRender.forEach(item => {
+        const li = document.createElement('li');
+        const badge = item.is_new ? '<span class="new-badge">NEW</span>' : '';
+        
+        // Date format (e.g., August 2026)
+        const dateObj = new Date(item.created_at);
+        const monthYear = dateObj.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+
+        li.innerHTML = `
+            <a href="job-details.html?id=${item.id}">${item.title} ${badge}</a>
+            <span class="list-date">🗓️ ${monthYear}</span>
+        `;
+        listElement.appendChild(li);
+    });
+
     }
     
     listElement.innerHTML = ''; // Clear loading text
