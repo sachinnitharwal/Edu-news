@@ -1,3 +1,6 @@
+/* =========================================
+   BASE VARIABLES & RESET
+========================================= */
 :root {
     --blue: #0757d9;
     --navy: #071b4b;
@@ -25,7 +28,9 @@ a {
     color: inherit;
 }
 
-/* Top Nav */
+/* =========================================
+   NAVIGATION & HEADER
+========================================= */
 .top {
     background: var(--navy);
     color: #fff;
@@ -36,7 +41,6 @@ a {
     gap: 20px;
 }
 
-/* --- Modern Navigation Styles --- */
 .nav {
     height: 78px;
     background: #fff;
@@ -92,7 +96,6 @@ a {
     background: #f0f7ff;
 }
 
-/* Hamburger Button */
 .hamburger {
     display: none;
     font-size: 26px;
@@ -104,62 +107,9 @@ a {
     transition: transform 0.3s ease;
 }
 
-/* --- Mobile Navigation Drawer (Rock-Solid Version) --- */
-@media(max-width: 900px) {
-    .hamburger {
-        display: block;
-    }
-    
-    .menu {
-        display: none;
-        /* Base state is hidden */
-        position: absolute;
-        top: 78px;
-        left: 0;
-        width: 100%;
-        background: #fff;
-        flex-direction: column;
-        padding: 20px 0;
-        margin: 0;
-        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-        z-index: 9999;
-        border-top: 1px solid var(--border);
-    }
-    
-    .menu.show-menu {
-        display: flex;
-        /* Visible state */
-        animation: fadeInDown 0.3s ease forwards;
-    }
-    
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .menu a {
-        width: 90%;
-        text-align: center;
-        padding: 14px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        margin: 5px auto;
-        border-radius: 8px;
-    }
-    
-    .menu a:hover {
-        background: #e2e8f0;
-    }
-}
-
-/* --- Hero Section with Animations --- */
+/* =========================================
+   HERO SECTION & SEARCH
+========================================= */
 .hero {
     background: linear-gradient(-45deg, #061943, #0757d9, #083b9e, #071b4b);
     background-size: 300% 300%;
@@ -171,29 +121,14 @@ a {
 }
 
 @keyframes gradientMove {
-    0% {
-        background-position: 0% 50%;
-    }
-    
-    50% {
-        background-position: 100% 50%;
-    }
-    
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 @keyframes slideUpFade {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .hero h1 {
@@ -202,7 +137,6 @@ a {
     animation: slideUpFade 0.8s ease forwards;
 }
 
-/* Continuous Shimmer Effect for Highlighted Text */
 .hero h1 span {
     background: linear-gradient(90deg, #ffd23f 0%, #ffffff 50%, #ffd23f 100%);
     background-size: 200% auto;
@@ -213,13 +147,8 @@ a {
 }
 
 @keyframes shineText {
-    0% {
-        background-position: 200% center;
-    }
-    
-    100% {
-        background-position: 0% center;
-    }
+    0% { background-position: 200% center; }
+    100% { background-position: 0% center; }
 }
 
 .hero p {
@@ -229,7 +158,6 @@ a {
     animation: slideUpFade 0.8s ease 0.1s forwards;
 }
 
-/* Search Box Styling & Interaction */
 .search {
     max-width: 900px;
     margin: auto;
@@ -281,7 +209,6 @@ a {
     background: var(--navy);
 }
 
-/* Trending Tags Hover Animation */
 .trends {
     margin-top: 25px;
     font-size: 13px;
@@ -342,149 +269,94 @@ a {
     margin-bottom: 7px;
 }
 
+/* =========================================
+   PORTAL GRID & CARDS (PHOTO MATCHING)
+========================================= */
 .container {
     max-width: 1200px;
     margin: auto;
     padding: 0 20px 50px;
 }
 
-/* --- New Portal List Layout Styles (Masonry Layout) --- */
 .portal-grid {
-    column-count: 2;
-    /* Ye automatically 2 columns mein data divide karega */
+    column-count: 2; /* Auto-adjust Masonry Layout */
     column-gap: 20px;
-    /* Columns ke beech ki jagah */
     margin-top: 20px;
 }
 
 .portal-column {
     background: #fff;
     border-radius: 12px;
-    padding: 20px 15px;
+    padding: 0; /* Padding removed for edge-to-edge header */
     display: flex;
     flex-direction: column;
     break-inside: avoid;
-    /* Ye kisi bhi box ko aadha toot kar dusre column me jaane se rokega */
     margin-bottom: 20px;
-    /* Har box ke neeche ka space */
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05); /* Premium soft shadow */
+    overflow: hidden; 
 }
 
-
-/* --- Colored Borders for Each Column --- */
-#jobs.portal-column {
-    border: 1px solid #ffd6d6;
-    box-shadow: 0 4px 15px rgba(209, 21, 21, 0.04);
-}
-
-#admit-cards.portal-column {
-    border: 1px solid #d6e8ff;
-    box-shadow: 0 4px 15px rgba(7, 87, 217, 0.04);
-}
-
-#results.portal-column {
-    border: 1px solid #dcfce7;
-    box-shadow: 0 4px 15px rgba(22, 101, 52, 0.04);
-}
-
-#answer-keys.portal-column {
-    border: 1px solid #fae8ff;
-    box-shadow: 0 4px 15px rgba(112, 26, 117, 0.04);
-}
-
+/* Dark Navy Header with Orange Line */
 .col-head {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 15px;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--navy);
+    padding: 15px 20px;
+    border-bottom: 3px solid var(--orange);
+    margin-bottom: 0;
 }
 
 .col-head h2 {
     margin: 0;
     font-size: 16px;
-    padding: 12px 15px;
-    border-radius: 8px;
+    color: #fff !important; 
     display: flex;
     align-items: center;
     gap: 8px;
     font-weight: 700;
+    background: transparent !important;
+    border: none !important;
+    padding: 0;
 }
 
-/* Colored Headings */
-#jobs .col-head h2 {
-    background: #fff0f0;
-    color: #d11515;
-    border: 1px solid #ffd6d6;
-}
-
-#admit-cards .col-head h2 {
-    background: #f0f7ff;
-    color: #0757d9;
-    border: 1px solid #d6e8ff;
-}
-
-#results .col-head h2 {
-    background: #f0fdf4;
-    color: #166534;
-    border: 1px solid #dcfce7;
-}
-
-#answer-keys .col-head h2 {
-    background: #fdf4ff;
-    color: #701a75;
-    border: 1px solid #fae8ff;
-}
-
-#admission .col-head h2 {
-    background: #fff0f0;
-    color: #d11515;
-    border: 1px solid #ffd6d6
-}
-#syllabus .col-head h2 {
-    background: #f0f7ff;
-    color: #0757d9;
-    border: 1px solid #d6e8ff;
-}
-
-/* Modern Filter Dropdown */
+/* White Button Style Dropdown */
 .mini-filter {
-    padding: 10px 12px;
-    background: #f8fafc;
+    padding: 6px 12px;
+    background: #fff;
     border: 1px solid transparent;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #475569;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
     outline: none;
     cursor: pointer;
-    width: 100%;
-    transition: all 0.2s ease;
+    width: auto;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 14px;
-    padding-right: 35px;
 }
 
-.mini-filter:hover {
-    background: #f1f5f9;
-}
-
+.mini-filter:hover { background: #f1f5f9; }
 .mini-filter:focus {
     background: #fff;
     border-color: var(--blue);
     box-shadow: 0 0 0 3px rgba(7, 87, 217, 0.1);
-    color: var(--navy);
 }
 
+/* Lists and Items */
 .link-list {
     list-style: none;
-    padding: 0;
+    padding: 10px 20px 20px;
     margin: 0;
 }
 
 .link-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    gap: 15px;
 }
 
 .link-list li:last-child {
@@ -493,49 +365,80 @@ a {
 
 .link-list a {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
-    padding: 14px 5px;
     font-size: 14px;
-    color: #d11515;
-    font-weight: 500;
+    color: #a81c1c; /* Photo matching text color */
+    font-weight: 600;
     line-height: 1.5;
     text-decoration: none;
     transition: all 0.2s ease;
-}
-
-.link-list a::before {
-    content: '❯';
-    color: var(--orange);
-    font-size: 12px;
-    font-weight: 900;
-    margin-top: 2px;
-    transition: transform 0.2s ease;
+    flex: 1;
 }
 
 .link-list a:hover {
     color: var(--blue);
-    font-weight: 700;
 }
 
-.link-list a:hover::before {
-    transform: translateX(5px);
-    color: var(--blue);
+/* Hide old arrows */
+.link-list a::before {
+    display: none; 
+}
+
+/* Photo matching Date */
+.list-date {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    font-weight: 500;
 }
 
 .new-badge {
     background: #e92738;
     color: #fff;
     border-radius: 10px;
-    padding: 3px 6px;
+    padding: 2px 6px;
     font-size: 10px;
     font-weight: 800;
     margin-left: 5px;
-    vertical-align: middle;
-    display: inline-block;
+    white-space: nowrap;
 }
 
-/* --- Premium Subscribe Section --- */
+/* =========================================
+   VIEW ALL BUTTON
+========================================= */
+.view-all-btn {
+    display: inline-block !important;
+    background: #f8fafc;
+    color: var(--blue) !important;
+    padding: 12px 20px !important;
+    border-radius: 8px;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-align: center;
+    transition: all 0.3s ease !important;
+    border: 1px solid var(--border);
+    width: 100%;
+}
+
+.view-all-btn::before {
+    display: none !important; 
+}
+
+.view-all-btn:hover {
+    background: var(--blue);
+    color: #fff !important;
+    border-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(7, 87, 217, 0.15);
+}
+
+/* =========================================
+   SUBSCRIBE & FOOTER
+========================================= */
 .subscribe {
     max-width: 1160px;
     margin: 60px auto;
@@ -565,22 +468,9 @@ a {
     z-index: 1;
 }
 
-.subscribe>div {
-    position: relative;
-    z-index: 2;
-}
-
-.subscribe h2 {
-    margin: 0 0 10px;
-    font-size: 28px;
-    line-height: 1.3;
-}
-
-.subscribe p {
-    margin: 0;
-    opacity: 0.9;
-    font-size: 16px;
-}
+.subscribe>div { position: relative; z-index: 2; }
+.subscribe h2 { margin: 0 0 10px; font-size: 28px; line-height: 1.3; }
+.subscribe p { margin: 0; opacity: 0.9; font-size: 16px; }
 
 .subform {
     display: flex;
@@ -618,7 +508,6 @@ a {
     box-shadow: 0 8px 20px rgba(255, 106, 0, 0.4);
 }
 
-/* --- Footer Styles --- */
 .footer {
     background: #061943;
     color: #dce6ff;
@@ -633,16 +522,8 @@ a {
     gap: 35px;
 }
 
-.footer h3 {
-    color: #fff;
-}
-
-.footer p,
-.footer a {
-    font-size: 13px;
-    color: #b7c4df;
-    line-height: 1.8;
-}
+.footer h3 { color: #fff; }
+.footer p, .footer a { font-size: 13px; color: #b7c4df; line-height: 1.8; }
 
 .copy {
     border-top: 1px solid #ffffff18;
@@ -653,84 +534,68 @@ a {
     color: #9fb0d0;
 }
 
-/* Responsive Queries */
+/* =========================================
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+========================================= */
 @media(max-width: 1024px) {
-    .portal-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .quick {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    .quick { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media(max-width: 900px) {
-    .hero h1 {
-        font-size: 34px;
+    .hero h1 { font-size: 34px; }
+    .footergrid { grid-template-columns: 1fr 1fr; }
+    
+    .portal-grid {
+        column-count: 1; /* Automatically single column for mobile */
+    }
+
+    /* Mobile Hamburger Nav Drawer */
+    .menu {
+        display: none;
+        position: absolute;
+        top: 78px;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        flex-direction: column;
+        padding: 20px 0;
+        margin: 0;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+        border-top: 1px solid var(--border);
     }
     
-    .footergrid {
-        grid-template-columns: 1fr 1fr;
+    .menu.show-menu {
+        display: flex;
+        animation: fadeInDown 0.3s ease forwards;
+    }
+    
+    .menu a {
+        width: 90%;
+        text-align: center;
+        padding: 14px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        margin: 5px auto;
+        border-radius: 8px;
     }
 }
 
 @media(max-width: 600px) {
-    .top {
-        display: none;
-    }
+    .top { display: none; }
+    .nav { height: 68px; }
+    .brand { font-size: 22px; }
+    .brand img { width: 40px; height: 40px; }
+    .hero { padding: 45px 18px 80px; }
+    .hero h1 { font-size: 29px; }
     
-    .nav {
-        height: 68px;
-    }
+    .search { border-radius: 18px; display: block; padding: 10px; }
+    .search input, .search select { width: 100%; max-width: none; margin-bottom: 5px; }
+    .search button { width: 100%; }
     
-    .brand {
-        font-size: 22px;
-    }
+    .quick { margin: -35px 12px 25px; grid-template-columns: repeat(2, 1fr); }
+    .footergrid { grid-template-columns: 1fr; }
     
-    .brand img {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .hero {
-        padding: 45px 18px 80px;
-    }
-    
-    .hero h1 {
-        font-size: 29px;
-    }
-    
-    .search {
-        border-radius: 18px;
-        display: block;
-        padding: 10px;
-    }
-    
-    .search input,
-    .search select {
-        width: 100%;
-        max-width: none;
-        margin-bottom: 5px;
-    }
-    
-    .search button {
-        width: 100%;
-    }
-    
-    .quick {
-        margin: -35px 12px 25px;
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .portal-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .footergrid {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Mobile Subscribe Styling */
     .subscribe {
         flex-direction: column;
         text-align: center;
@@ -738,11 +603,7 @@ a {
         padding: 35px 20px;
         border-radius: 20px;
     }
-    
-    .subscribe h2 {
-        font-size: 22px;
-    }
-    
+    .subscribe h2 { font-size: 22px; }
     .subform {
         flex-direction: column;
         border-radius: 16px;
@@ -751,52 +612,15 @@ a {
         margin-top: 25px;
         gap: 12px;
     }
-    
     .subform input {
         border-radius: 12px;
         padding: 16px;
         background: #fff;
         text-align: center;
     }
-    
     .subform button.btn {
         border-radius: 12px;
         width: 100%;
         padding: 16px;
     }
-}
-
-@media(max-width: 900px) {
-    .portal-grid {
-        column-count: 1;
-        /* Mobile screen par 1 column dikhega */
-    }
-}
-
-/* --- View All Button Styles --- */
-.view-all-btn {
-    display: inline-block !important;
-    background: #f8fafc;
-    color: var(--blue) !important;
-    padding: 12px 20px !important;
-    border-radius: 8px;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    text-align: center;
-    transition: all 0.3s ease !important;
-    border: 1px solid var(--border);
-    width: 100%;
-}
-
-/* Hide the default orange arrow for this button */
-.view-all-btn::before {
-    display: none !important; 
-}
-
-.view-all-btn:hover {
-    background: var(--blue);
-    color: #fff !important;
-    border-color: var(--blue);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(7, 87, 217, 0.15);
 }
