@@ -2,92 +2,94 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-50M8BHNJ46"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-50M8BHNJ46');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="EduNaukri - Latest government and private jobs, admit cards, results and notifications.">
-<title>EduNaukri — Latest Jobs & Vacancy</title>
-<link rel="stylesheet" href="style.css">
-<!-- Load the official Supabase library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-50M8BHNJ46"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-50M8BHNJ46');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EduNaukri - Latest government and private jobs, admit cards, results and notifications.">
+  <title>EduNaukri — Premium Job & Exam Updates</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
 <!-- Top Bar -->
 <div class="top">
   <div>✉ deepak87419566@gmail.com &nbsp; • &nbsp; ☎ +9509018268</div>
-  <div>Follow us: · YouTube · Telegram</div>
+  <div class="social-links">Follow us: <span>YouTube</span> • <span>Telegram</span></div>
 </div>
 
-<!-- Modern Navigation -->
-<!-- Navigation for Home Page -->
+<!-- Modern Glassmorphism Navigation -->
 <nav class="nav">
-  <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
-  
+  <a class="brand" href="index.html">
+    <img src="logo.png" alt="EduNaukri" onerror="this.style.display='none'">
+    Edu<span>Naukri</span>
+  </a>
   <button class="hamburger" id="hamburgerMenu">☰</button>
-  
   <div class="menu" id="navMenu">
     <a href="index.html" class="active">Home</a>
     <a href="#jobs">Latest Jobs</a>
     <a href="#admit-cards">Admit Card</a>
     <a href="#results">Results</a>
-    <a href="#answer-keys">Answer Key</a>
+    <a href="#others">Others</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact Us</a>
   </div>
 </nav>
 
-
-<!-- Hero Section -->
+<!-- Redesigned Premium Hero Section -->
 <section class="hero">
-  <h1>Latest Government & <span>Private Jobs</span></h1>
-  <p>एक ही जगह, सभी भर्तियों की जानकारी</p>
-  <p>Find latest job updates, notifications, admit card, result & more.</p>
-  <div class="search">
-    <input id="searchInput" placeholder="Search job by title, keyword, department...">
-    <select id="category">
-      <option>All Categories</option>
-      <option>Government Jobs</option>
-      <option>Private Jobs</option>
-      <option>Rajasthan Jobs</option>
-      <option>Central Jobs</option>
-    </select>
-    <button onclick="searchJobs()">🔍 Search</button>
-  </div>
-  <div class="trends">
-    <b>Trending:</b> 
-    <span class="trend">SSC</span>
-    <span class="trend">Rajasthan Police</span>
-    <span class="trend">Railway</span>
-    <span class="trend">Bank</span>
-    <span class="trend">UPSC</span>
+  <div class="hero-content">
+    <div class="badge">✨ India's #1 Job Portal</div>
+    <h1>Latest Government & <br><span class="gradient-text">Private Jobs</span></h1>
+    <p>एक ही जगह, सभी भर्तियों की सटीक जानकारी</p>
+    
+    <div class="search-wrapper">
+      <div class="search">
+        <input id="searchInput" placeholder="Search job by title, keyword...">
+        <select id="category">
+          <option>All Categories</option>
+          <option>Govt Jobs</option>
+          <option>Private Jobs</option>
+          <option>Rajasthan</option>
+        </select>
+        <button onclick="searchJobs()">Search</button>
+      </div>
+    </div>
+    
+    <div class="trends">
+      <b>🔥 Trending Searches:</b> 
+      <span class="trend">SSC CGL</span>
+      <span class="trend">Rajasthan Police</span>
+      <span class="trend">Railway NTPC</span>
+      <span class="trend">Bank PO</span>
+    </div>
   </div>
 </section>
 
-<!-- Quick Links -->
-<div class="quick">
-  <a href="#updates"><span class="icon">📢</span>Latest Notifications</a>
-  <a href="#jobs"><span class="icon">🏛️</span>Government Jobs</a>
-  <a href="#jobs"><span class="icon">💼</span>Private Jobs</a>
-  <a href="#categories"><span class="icon">📍</span>Rajasthan Jobs</a>
-  <a href="#updates"><span class="icon">🪪</span>Admit Card</a>
-  <a href="#updates"><span class="icon">📊</span>Results</a>
-  <a href="#updates"><span class="icon">🔑</span>Answer Key</a>
+<!-- Floating Quick Links (App Pills) -->
+<div class="quick-wrapper reveal">
+  <div class="quick">
+    <a href="#jobs"><span class="icon">🏛️</span>Govt Jobs</a>
+    <a href="#jobs"><span class="icon">💼</span>Private Jobs</a>
+    <a href="#jobs"><span class="icon">📍</span>Rajasthan Jobs</a>
+    <a href="#admit-cards"><span class="icon">🪪</span>Admit Card</a>
+    <a href="#results"><span class="icon">📊</span>Results</a>
+    <a href="#others"><span class="icon">🌟</span>Others</a>
+    <a href="#admission"><span class="icon">🎓</span>Admissions</a>
+  </div>
 </div>
 
-<!-- Main Content Grid -->
 <!-- Main Content Grid -->
 <main class="container">
   <div class="portal-grid">
     
-    <!-- Column 1: Latest Jobs -->
-    <section class="portal-column" id="jobs">
+    <section class="portal-column reveal" id="jobs">
       <div class="col-head">
         <h2>🔥 Latest Jobs Notifications</h2>
         <select class="mini-filter" onchange="filterCategory(this)">
@@ -97,13 +99,10 @@
           <option value="other">Other States</option>
         </select>
       </div>
-      <ul class="link-list" id="jobsList">
-        <!-- Data populated by JS -->
-      </ul>
+      <ul class="link-list" id="jobsList"></ul>
     </section>
 
-    <!-- Column 2: Admit Cards -->
-    <section class="portal-column" id="admit-cards">
+    <section class="portal-column reveal" id="admit-cards">
       <div class="col-head">
         <h2>🪪 Admit Card</h2>
         <select class="mini-filter" onchange="filterCategory(this)">
@@ -113,13 +112,10 @@
           <option value="other">Other States</option>
         </select>
       </div>
-      <ul class="link-list" id="admitList">
-        <!-- Data populated by JS -->
-      </ul>
+      <ul class="link-list" id="admitList"></ul>
     </section>
 
-    <!-- Column 3: Results -->
-    <section class="portal-column" id="results">
+    <section class="portal-column reveal" id="results">
       <div class="col-head">
         <h2>📊 Result</h2>
         <select class="mini-filter" onchange="filterCategory(this)">
@@ -129,15 +125,13 @@
           <option value="other">Other States</option>
         </select>
       </div>
-      <ul class="link-list" id="resultList">
-        <!-- Data populated by JS -->
-      </ul>
+      <ul class="link-list" id="resultList"></ul>
     </section>
 
-    <!-- Column 4: Answer Keys -->
-    <section class="portal-column" id="answer-keys">
+    <!-- ANSWER KEY REPLACED WITH OTHERS -->
+    <section class="portal-column reveal" id="others">
       <div class="col-head">
-        <h2>🔑 Answer Key</h2>
+        <h2>🌟 Others</h2>
         <select class="mini-filter" onchange="filterCategory(this)">
           <option value="all">All States</option>
           <option value="rajasthan">Rajasthan</option>
@@ -145,13 +139,10 @@
           <option value="other">Other States</option>
         </select>
       </div>
-      <ul class="link-list" id="answerList">
-         <!-- Data populated by JS -->
-      </ul>
+      <ul class="link-list" id="othersList"></ul>
     </section>
 
-    <!-- Column 5: Admission & Updates -->
-    <section class="portal-column" id="admission">
+    <section class="portal-column reveal" id="admission">
       <div class="col-head">
         <h2>🎓 Admission & Updates</h2>
         <select class="mini-filter" onchange="filterCategory(this)">
@@ -161,15 +152,12 @@
           <option value="other">Other States</option>
         </select>
       </div>
-      <ul class="link-list" id="admissionList">
-         <!-- Data populated by JS -->
-      </ul>
+      <ul class="link-list" id="admissionList"></ul>
     </section>
 
-    <!-- Column 6: Syllabus -->
-    <section class="portal-column" id="sarkari yojana">
+    <section class="portal-column reveal" id="syllabus">
       <div class="col-head">
-        <h2>🏛️Sarkari Yojana</h2>
+        <h2>🏛️ Sarkari Yojana</h2>
         <select class="mini-filter" onchange="filterCategory(this)">
           <option value="all">All States</option>
           <option value="rajasthan">Rajasthan</option>
@@ -177,20 +165,17 @@
           <option value="other">Other States</option>
         </select>
       </div>
-      <ul class="link-list" id="syllabusList">
-         <!-- Data populated by JS -->
-      </ul>
+      <ul class="link-list" id="syllabusList"></ul>
     </section>
 
   </div>
 </main>
 
-
-<!-- Subscribe Section -->
-<section class="subscribe">
-  <div>
-    <h2>📩 Get Latest Job Updates in Your Email</h2>
-    <p>Subscribe now and never miss an important update.</p>
+<!-- Glowing Subscribe Section -->
+<section class="subscribe reveal">
+  <div class="subscribe-content">
+    <h2>📩 Get Latest Updates</h2>
+    <p>Subscribe now and never miss an important notification.</p>
   </div>
   <form class="subform" onsubmit="subscribe(event)">
     <input id="email" type="email" placeholder="Enter your email address" required>
@@ -198,30 +183,34 @@
   </form>
 </section>
 
-<!-- Footer -->
+<!-- Clean Footer -->
 <footer class="footer">
   <div class="footergrid">
-    <div>
+    <div class="footer-brand-col">
       <div class="brand">🎓 Edu<span>Naukri</span></div>
-      <p>EduNaukri is your one-stop destination for latest job updates, admit card, results, notifications and more.</p>
+      <p>Your premium destination for the latest job updates, admit cards, results, and career notifications.</p>
     </div>
     <div>
-          <div>
       <h3>Quick Links</h3>
       <a href="about.html">About Us</a><br>
       <a href="contact.html">Contact Us</a><br>
       <a href="privacy.html">Privacy Policy</a><br>
       <a href="privacy.html">Terms & Conditions</a><br>
-      <a href="login.html" style="display: inline-block; margin-top: 15px; background: var(--orange); color: #fff; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 13px;">🔒 Admin Panel</a>
+      <a href="login.html" class="admin-link">🔒 Admin Panel</a>
     </div>
-
     <div>
       <h3>Important Links</h3>
-      <a href="#jobs">Latest Notifications</a><br><a href="#admit-cards">Admit Card</a><br><a href="#results">Results</a><br><a href="#answer-keys">Answer Key</a>
+      <a href="#jobs">Latest Notifications</a><br>
+      <a href="#admit-cards">Admit Card</a><br>
+      <a href="#results">Results</a><br>
+      <a href="#others">Others</a>
     </div>
     <div>
       <h3>Popular Jobs</h3>
-      <a href="#jobs">Rajasthan Police</a><br><a href="#jobs">SSC CGL</a><br><a href="#jobs">Railway Jobs</a><br><a href="#jobs">Bank Jobs</a>
+      <a href="#jobs">Rajasthan Police</a><br>
+      <a href="#jobs">SSC CGL</a><br>
+      <a href="#jobs">Railway Jobs</a><br>
+      <a href="#jobs">Bank Jobs</a>
     </div>
   </div>
   <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>

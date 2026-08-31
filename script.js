@@ -3,24 +3,21 @@ const SUPABASE_URL = 'https://coeemddusgoafawggwsl.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Map HTML list IDs to Database Categories
+// Map HTML list IDs to Database Categories (PURANI VALUES USE KI GAYI HAIN)
 const categoryMapping = {
     'jobsList': 'jobs',
     'admitList': 'admit-cards',
     'resultList': 'results',
-    'answerList': 'answer-keys',
-    'admissionList': 'admission', // NEW
-    'syllabusList': 'syllabus'    // NEW
+    'othersList': 'answer-keys',       // Name 'Others' but DB value 'answer-keys'
+    'admissionList': 'admission', 
+    'syllabusList': 'syllabus'         // Name 'Sarkari Yojana' but DB value 'syllabus'
 };
 
-
-// Main function to fetch and render data for a specific column
 // Main function to fetch and render data for a specific column
 async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuery = '') {
     const listElement = document.getElementById(listElementId);
-    listElement.innerHTML = '<li style="padding: 14px 5px; font-size: 14px;">Loading...</li>';
+    listElement.innerHTML = '<li style="padding: 16px 0; font-size: 14px;">Loading...</li>';
     
-    // Start building the query with a limit of 11 (to check if there are more than 10)
     let query = supabaseClient
         .from('jobs')
         .select('*')
@@ -28,12 +25,10 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
         .order('created_at', { ascending: false })
         .limit(11); 
         
-    // Apply state filter if not "all"
     if (stateFilter !== 'all') {
         query = query.eq('state', stateFilter);
     }
     
-    // Apply text search if present
     if (searchQuery) {
         query = query.ilike('title', `%${searchQuery}%`);
     }
@@ -42,14 +37,23 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
     
     if (error) {
         console.error(`Error fetching ${dbCategory}:`, error);
-        listElement.innerHTML = '<li style="padding: 14px 5px; font-size: 14px; color: red;">Error loading data</li>';
+        listElement.innerHTML = '<li style="padding: 16px 0; font-size: 14px; color: red;">Error loading data</li>';
         return;
-            // Loop through the data and build list items
+    }
+    
+    listElement.innerHTML = ''; 
+    
+    if (data.length === 0) {
+        listElement.innerHTML = '<li style="padding: 16px 0; font-size: 14px; color: #667085;">No updates found.</li>';
+        return;
+    }
+    
+    const hasMore = data.length > 10;
+    const postsToRender = hasMore ? data.slice(0, 10) : data; 
+    
     postsToRender.forEach(item => {
         const li = document.createElement('li');
         const badge = item.is_new ? '<span class="new-badge">NEW</span>' : '';
-        
-        // Date format (e.g., August 2026)
         const dateObj = new Date(item.created_at);
         const monthYear = dateObj.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
 
@@ -60,47 +64,24 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
         listElement.appendChild(li);
     });
 
-    }
-    
-    listElement.innerHTML = ''; // Clear loading text
-    
-    // If no posts match the query/filter
-    if (data.length === 0) {
-        listElement.innerHTML = '<li style="padding: 14px 5px; font-size: 14px; color: #667085;">No updates found.</li>';
-        return;
-    }
-    
-    // Check if we have more than 10 posts
-    const hasMore = data.length > 10;
-    const postsToRender = hasMore ? data.slice(0, 10) : data; // Take only first 10
-    
-    // Loop through the data and build list items
-    postsToRender.forEach(item => {
-        const li = document.createElement('li');
-        const badge = item.is_new ? ' <span class="new-badge">NEW</span>' : '';
-        // Create link passing the post ID to a details page
-        li.innerHTML = `<a href="job-details.html?id=${item.id}">${item.title}${badge}</a>`;
-        listElement.appendChild(li);
-    });
-
-    // Add "View All" button if there are more than 10 posts
     if (hasMore) {
         const btnLi = document.createElement('li');
         btnLi.style.textAlign = 'center';
         btnLi.style.borderBottom = 'none';
         btnLi.style.paddingTop = '12px';
         
-        // Convert category name to readable format (e.g., admit-cards -> ADMIT CARDS)
-        const readableCategory = dbCategory.replace('-', ' ').toUpperCase();
+        // Display Text Change logic
+        let readableCategory = dbCategory.replace('-', ' ').toUpperCase();
+        if (dbCategory === 'answer-keys') readableCategory = 'OTHERS';
+        if (dbCategory === 'syllabus') readableCategory = 'SARKARI YOJANA';
         
-        // Map database categories to their future separate HTML pages
         const pageURLs = {
             'jobs': 'latest-jobs.html',
             'admit-cards': 'admit-cards.html',
             'results': 'results.html',
-            'answer-keys': 'answer-keys.html',
+            'answer-keys': 'others.html',
             'admission': 'admission.html',
-            'syllabus': 'syllabus.html'
+            'syllabus': 'sarkari-yojana.html'
         };
         
         const targetPage = pageURLs[dbCategory] || '#';
@@ -110,7 +91,6 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
     }
 }
 
-// Loads all columns at once (used on page load or full search)
 async function loadAllColumns(searchQuery = '') {
     for (const [listId, dbCategory] of Object.entries(categoryMapping)) {
         const section = document.getElementById(listId).closest('.portal-column');
@@ -119,27 +99,22 @@ async function loadAllColumns(searchQuery = '') {
     }
 }
 
-// Handles the main top search bar
 function searchJobs() {
     const q = document.getElementById('searchInput').value.trim();
-    loadAllColumns(q); // Re-fetch all columns with the search keyword
+    loadAllColumns(q); 
     document.getElementById('jobs').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Handles the mini dropdown filters in each column
 function filterCategory(selectElement) {
     const selectedState = selectElement.value;
     const section = selectElement.closest('.portal-column');
     const listId = section.querySelector('.link-list').id;
     const dbCategory = categoryMapping[listId];
-    
     const currentSearchQuery = document.getElementById('searchInput').value.trim();
     
-    // Only re-fetch the specific column that was filtered
     fetchAndRender(dbCategory, listId, selectedState, currentSearchQuery);
 }
 
-// Handles the email subscription footer
 function subscribe(e) {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -147,20 +122,17 @@ function subscribe(e) {
     document.getElementById('email').value = ''; 
 }
 
-// Automatically load data when the page opens
 document.addEventListener('DOMContentLoaded', () => {
     loadAllColumns();
 });
-// --- Mobile Hamburger Menu Logic ---
+
+// Mobile Hamburger Menu
 const hamburger = document.getElementById('hamburgerMenu');
 const navMenu = document.getElementById('navMenu');
 
 if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
-        // Toggle the menu visibility
         navMenu.classList.toggle('show-menu');
-        
-        // Change icon from Hamburger (☰) to Close (✕)
         if (navMenu.classList.contains('show-menu')) {
             hamburger.innerHTML = '✕';
             hamburger.style.transform = 'rotate(90deg)';
@@ -170,7 +142,6 @@ if (hamburger && navMenu) {
         }
     });
 
-    // Close the menu automatically when any link is clicked
     document.querySelectorAll('.menu a').forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('show-menu');
@@ -179,3 +150,18 @@ if (hamburger && navMenu) {
         });
     });
 }
+
+// Scroll Reveal
+function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 50; 
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+        }
+    }
+}
+window.addEventListener("scroll", reveal);
+reveal();
