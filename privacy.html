@@ -1,128 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — EduNaukri</title>
-<link rel="stylesheet" href="style.css">
-<style>
-    .page-container { max-width: 800px; margin: 40px auto; background: #fff; padding: 50px; border-radius: 12px; box-shadow: 0 4px 15px #102a4308; border: 1px solid var(--border); }
-    .page-title { font-size: 32px; color: var(--navy); margin: 0 0 25px 0; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
-    .content-body { line-height: 1.8; color: var(--text); font-size: 15px; }
-    .content-body h2 { color: var(--blue); margin-top: 30px; font-size: 20px; }
-    .content-body p, .content-body ul { margin-bottom: 15px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — EduNaukri</title>
+  <!-- Yahan upar wale Contact Us page ka Pura <style> CSS block copy karke daal dein -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
-    @media(max-width: 768px) {
-        .page-container { padding: 25px 15px; margin-top: 0; border-radius: 0; border: none; box-shadow: none; }
-    }
-</style>
+    :root { --blue: #2563EB; --navy: #0F172A; --bg: #F8FAFC; --card: #FFFFFF; --text: #1E293B; --muted: #64748B; --border: #E2E8F0; --shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05); }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+    
+    /* Premium Nav */
+    .nav { height: 80px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between; padding: 0 5%; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 26px; color: var(--navy); text-decoration: none; }
+    .brand span { color: var(--blue); }
+    .menu a { font-size: 15px; font-weight: 600; color: var(--muted); padding: 8px 16px; text-decoration: none; transition: 0.3s; }
+    .menu a:hover { color: var(--blue); }
+
+    /* Page Container */
+    .container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+    .page-card { background: var(--card); padding: 50px; border-radius: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    
+    .page-title { font-size: 32px; font-weight: 800; color: var(--navy); margin-top: 0; margin-bottom: 10px; }
+    .page-desc { color: var(--muted); font-size: 16px; margin-bottom: 40px; }
+
+    /* Contact Grid */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
+    
+    /* Social Media Links */
+    .social-box { background: var(--bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border); }
+    .social-box h3 { margin-top: 0; color: var(--navy); font-size: 20px; }
+    .social-btn { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; color: #fff; margin-bottom: 15px; transition: all 0.3s ease; }
+    .social-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    
+    .btn-tg { background: #229ED9; }
+    .btn-wa { background: #25D366; }
+    .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    
+    .email-text { margin-top: 20px; font-size: 14px; color: var(--muted); font-weight: 600; }
+    .email-text a { color: var(--blue); text-decoration: none; }
+
+    /* Premium Form */
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--navy); }
+    .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 15px; outline: none; background: #F8FAFC; transition: 0.3s; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--blue); background: #fff; box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+    .submit-btn { background: var(--blue); color: #fff; border: none; padding: 16px; width: 100%; border-radius: 10px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.3s; font-family: inherit; }
+    .submit-btn:hover { background: #1E40AF; transform: translateY(-2px); }
+
+    @media(max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } .page-card { padding: 30px 20px; } }
+  </style>
 </head>
 <body>
 
 <nav class="nav">
-  <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
-  <button class="hamburger" id="hamburgerMenu">☰</button>
-  <div class="menu" id="navMenu">
+  <a class="brand" href="index.html">Edu<span>Naukri</span></a>
+  <div class="menu">
     <a href="index.html">Home</a>
-    <a href="index.html#jobs">Government Jobs</a>
     <a href="contact.html">Contact Us</a>
+    <a href="disclaimer.html">Disclaimer</a>
   </div>
 </nav>
 
-<main class="container">
-    <div class="page-container">
-        <h1 class="page-title">Privacy Policy</h1>
-        
-        <div class="content-body">
-            <p><strong>Last updated: August 2026</strong></p>
-            <p>At EduNaukri, accessible from edunaukri.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by EduNaukri and how we use it.</p>
-            
-            <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to <a href="contact.html" style="color: var(--blue);">contact us</a>.</p>
+<div class="container">
+  <div class="page-card" style="line-height: 1.8;">
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-desc">Last Updated: September 2026</p>
+    
+    <h3 style="color: var(--navy); margin-top: 30px;">1. Information We Collect</h3>
+    <p>At EduNaukri, the privacy of our visitors is of extreme importance to us. We do not require users to register or provide sensitive personal data to read our job notifications.</p>
 
-            <h2>Log Files</h2>
-            <p>EduNaukri follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable.</p>
+    <h3 style="color: var(--navy); margin-top: 30px;">2. Log Files & Analytics</h3>
+    <p>Like many other websites, EduNaukri makes use of log files and analytics tools. The information includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, and referring/exit pages to analyze trends and administer the site.</p>
 
-            <h2>Cookies and Web Beacons</h2>
-            <p>Like any other website, EduNaukri uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+    <h3 style="color: var(--navy); margin-top: 30px;">3. Google AdSense and DoubleClick DART Cookie</h3>
+    <p>Google, as a third-party vendor, uses cookies to serve ads on EduNaukri. Google's use of the DART cookie enables it to serve ads to our site's visitors based upon their visit to our site and other sites on the Internet. Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy.</p>
 
-            <h2>Google DoubleClick DART Cookie</h2>
-            <p>Google is one of aHere is a comprehensive, readymade Privacy Policy template that you can easily copy, paste, and adapt for your website. 
+    <h3 style="color: var(--navy); margin-top: 30px;">4. Contacting Us</h3>
+    <p>If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at <strong>deepak87419566@gmail.com</strong> or <strong>dream100wala@gmail.com</strong>.</p>
+  </div>
+</div>
 
-You will need to replace the bracketed text (like **[Website Name]**) with your actual details. This template includes standard clauses for account creation, databases, and third-party links (such as affiliate marketing).
-
-***
-
-# Privacy Policy for [Website Name]
-
-**Effective Date:** [Insert Date, e.g., August 23, 2026]
-
-Welcome to **[Website Name]** ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website **[Insert Website URL]**. 
-
-Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
-
-### 1. Information We Collect
-We collect personal information that you voluntarily provide to us when you register on the website, express an interest in obtaining information about us or our products and services, or otherwise contact us.
-
-*   **Personal Data:** Name, email address, username, and password (if you create an account).
-*   **Derivative Data:** Information our servers automatically collect when you access the site, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the site.
-
-### 2. How We Use Your Information
-Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:
-*   Create and manage your account.
-*   Deliver targeted advertising, coupons, newsletters, and other information regarding promotions to you.
-*   Email you regarding your account or order.
-*   Respond to product and customer service requests.
-*   Improve our website and user experience.
-
-### 3. Cookies and Web Beacons
-We may use cookies, web beacons, tracking pixels, and other tracking technologies on the Site to help customize the Site and improve your experience. When you access the Site, your personal information is not collected through the use of tracking technology. Most browsers are set to accept cookies by default. You can remove or reject cookies, but be aware that such action could affect the availability and functionality of the Site.
-
-### 4. Third-Party Websites and Affiliate Links
-The Site may contain links to third-party websites and applications of interest, including advertisements and external services that are not affiliated with us. 
-*   **Affiliate Links:** We may participate in affiliate marketing and may allow affiliate links to be encoded on some of our pages. This means that we may earn a commission if/when you click on or make purchases via affiliate links.
-*   Once you have used these links to leave the Site, any information you provide to these third parties is not covered by this Privacy Policy, and we cannot guarantee the safety and privacy of your information.
-
-### 5. Security of Your Information
-We use administrative, technical, and physical security measures (including secure database management) to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.
-
-### 6. Policy for Children
-We do not knowingly solicit information from or market to children under the age of 13. If we learn that we have collected personal information from a child under age 13 without verification of parental consent, we will delete that information as quickly as possible.
-
-### 7. Contact Us
-If you have questions or comments about this Privacy Policy, please contact us at:
-*   **Email:** [Insert Contact Email]
-*   **Website:** [Insert Contact Page URL]
-
-***
-
-Is this privacy policy for an educational platform, a job alert portal, a general blog, or something else entirely? Let me know so I can add any specific data-handling clauses you might need!
-
-<script>    // --- Mobile Hamburger Menu Logic ---
-    const hamburger = document.getElementById('hamburgerMenu');
-    const navMenu = document.getElementById('navMenu');
-
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            // Toggle the menu visibility
-            navMenu.classList.toggle('show-menu');
-            
-            // Change icon from Hamburger (☰) to Close (✕)
-            if (navMenu.classList.contains('show-menu')) {
-                hamburger.innerHTML = '✕';
-                hamburger.style.transform = 'rotate(90deg)';
-            } else {
-                hamburger.innerHTML = '☰';
-                hamburger.style.transform = 'rotate(0deg)';
-            }
-        });
-
-        // Close the menu automatically when any link is clicked
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-                hamburger.innerHTML = '☰';
-                hamburger.style.transform = 'rotate(0deg)';
-            });
-        });
-    }
-</script>
+</body>
+</html>
