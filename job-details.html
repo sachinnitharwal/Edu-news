@@ -675,6 +675,36 @@
                 document.getElementById('ogTitle').content = postTitle;
                 document.getElementById('twTitle').content = postTitle;
                 
+                            // 5. Add Dynamic JSON-LD Schema Markup (For SEO)
+            const schemaData = {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": currentUrl
+                },
+                "headline": postTitle,
+                "image": "https://edu-nuakri.netlify.app/logo.png",
+                "author": {
+                    "@type": "Organization",
+                    "name": "EduNaukri"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "EduNaukri",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://edu-nuakri.netlify.app/logo.png"
+                    }
+                },
+                "datePublished": data.created_at || new Date().toISOString()
+            };
+
+            const schemaScript = document.createElement('script');
+            schemaScript.type = "application/ld+json";
+            schemaScript.text = JSON.stringify(schemaData);
+            document.head.appendChild(schemaScript);
+
                 
                 document.getElementById('displayTitle').innerText = data.title;
                 
