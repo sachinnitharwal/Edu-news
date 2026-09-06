@@ -57,8 +57,11 @@ async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuer
         const dateObj = new Date(item.created_at);
         const monthYear = dateObj.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
 
+        // Clean URL Logic: Use slug if available, else fallback to old ID format
+        const postLink = item.slug ? `/post/${item.slug}` : `job-details.html?id=${item.id}`;
+
         li.innerHTML = `
-            <a href="job-details.html?id=${item.id}">${item.title} ${badge}</a>
+            <a href="${postLink}">${item.title} ${badge}</a>
             <span class="list-date">🗓️ ${monthYear}</span>
         `;
         listElement.appendChild(li);
