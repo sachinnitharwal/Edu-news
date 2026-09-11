@@ -1,4 +1,11 @@
 [[redirects]]
+  from = "https://edu-nuakri.netlify.app/*"
+  to = "https://edu-naukri.in/:splat"
+  status = 301
+  force = true
+
+
+[[redirects]]
   from = "/sitemap.xml"
   to = "/.netlify/functions/sitemap"
   status = 200
