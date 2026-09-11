@@ -17,12 +17,12 @@ exports.handler = async function(event, context) {
         
         const jobs = await response.json();
 
-        // FIX 2: Slug hai toh clean URL, warna purana ID wala URL
+        // FIX 2: Slug hai toh clean URL, warna purana ID wala URL (Naye Domain ke sath)
         let urls = jobs.map(job => {
             const date = new Date(job.created_at).toISOString().split('T')[0];
             const postUrl = job.slug 
-                ? `https://edu-nuakri.netlify.app/post/${job.slug}` 
-                : `https://edu-nuakri.netlify.app/job-details.html?id=${job.id}`;
+                ? `https://edunaukri.in/post/${job.slug}` 
+                : `https://edunaukri.in/job-details.html?id=${job.id}`;
             
             return `
                 <url>
@@ -33,18 +33,18 @@ exports.handler = async function(event, context) {
                 </url>`;
         }).join('');
 
-        // FIX 3: Saare missing category pages add kar diye gaye hain
+        // FIX 3: Saare missing category pages NAYE DOMAIN ke sath add kar diye gaye hain
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url><loc>https://edu-nuakri.netlify.app/</loc><changefreq>always</changefreq><priority>1.0</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/latest-jobs.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/admit-cards.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/results.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/others.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/admission.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/sarkari-yojana.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/about.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-            <url><loc>https://edu-nuakri.netlify.app/contact.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+            <url><loc>https://edunaukri.in/</loc><changefreq>always</changefreq><priority>1.0</priority></url>
+            <url><loc>https://edunaukri.in/latest-jobs.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+            <url><loc>https://edunaukri.in/admit-cards.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+            <url><loc>https://edunaukri.in/results.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+            <url><loc>https://edunaukri.in/others.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+            <url><loc>https://edunaukri.in/admission.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+            <url><loc>https://edunaukri.in/sarkari-yojana.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+            <url><loc>https://edunaukri.in/about.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+            <url><loc>https://edunaukri.in/contact.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
             ${urls}
         </urlset>`;
 
