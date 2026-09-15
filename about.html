@@ -1,90 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us — EduNaukri</title>
-<link rel="stylesheet" href="style.css">
-<style>
-    .page-container { max-width: 800px; margin: 40px auto; background: #fff; padding: 50px; border-radius: 12px; box-shadow: 0 4px 15px #102a4308; border: 1px solid var(--border); }
-    .page-title { font-size: 32px; color: var(--navy); margin: 0 0 25px 0; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
-    .content-body { line-height: 1.8; color: var(--text); font-size: 16px; }
-    .content-body h2 { color: var(--blue); margin-top: 30px; }
-    
-    @media(max-width: 768px) {
-        .page-container { padding: 25px 15px; margin-top: 0; border-radius: 0; border: none; box-shadow: none; }
-    }
-</style>
-</head>
-<body>
-
-<nav class="nav">
-  <a class="brand" href="index.html"><img src="logo.png" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
-  <button class="hamburger" id="hamburgerMenu">☰</button>
-  <div class="menu" id="navMenu">
-    <a href="index.html">Home</a>
-    <a href="index.html#jobs">Government Jobs</a>
-    <a href="contact.html">Contact Us</a>
-  </div>
-</nav>
-
-<main class="container">
-    <div class="page-container">
-        <h1 class="page-title">About EduNaukri</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — EduNaukri</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #102a4308;
+            border: 1px solid var(--border);
+        }
         
-        <div class="content-body">
-            <p>Welcome to <strong>EduNaukri</strong>, your number one source for all things related to Government and Private Jobs, Admit Cards, Results, and educational notifications across India.</p>
-            
-            <h2>Our Mission</h2>
-            <p>We are dedicated to providing you the very best and fastest updates on employment opportunities, with an emphasis on accuracy, timely delivery, and user-friendly experience. Finding the right job notification in a sea of fake news can be difficult. At EduNaukri, our mission is to simplify this process for millions of students and job seekers.</p>
-
-            <h2>What We Offer</h2>
-            <ul>
-                <li><strong>Latest Government Jobs:</strong> Real-time updates on UPSC, SSC, Banking, Railways, and State-level recruitments.</li>
-                <li><strong>Admit Cards & Results:</strong> Direct links to download your exam admit cards and check results without any hassle.</li>
-                <li><strong>Syllabus & Exam Pattern:</strong> Detailed breakdowns of exam requirements to help you prepare better.</li>
-            </ul>
-
-            <h2>Our Story</h2>
-            <p>Founded in 2026, EduNaukri has come a long way from its beginnings. When we first started out, our passion for helping students find genuine employment resources drove us to build a platform that is clean, fast, and reliable.</p>
-            
-            <p>We hope you enjoy our services as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to <a href="contact.html" style="color: var(--blue); text-decoration: underline;">contact us</a>.</p>
-        </div>
-    </div>
-</main>
-
-<footer class="footer">
-  <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>
-</footer>
-<script>    // --- Mobile Hamburger Menu Logic ---
-    const hamburger = document.getElementById('hamburgerMenu');
-    const navMenu = document.getElementById('navMenu');
-
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            // Toggle the menu visibility
-            navMenu.classList.toggle('show-menu');
-            
-            // Change icon from Hamburger (☰) to Close (✕)
-            if (navMenu.classList.contains('show-menu')) {
-                hamburger.innerHTML = '✕';
-                hamburger.style.transform = 'rotate(90deg)';
-            } else {
-                hamburger.innerHTML = '☰';
-                hamburger.style.transform = 'rotate(0deg)';
+        .page-title {
+            font-size: 32px;
+            color: var(--navy);
+            margin: 0 0 25px 0;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+        }
+        
+        .content-body {
+            line-height: 1.8;
+            color: var(--text);
+            font-size: 16px;
+        }
+        
+        .content-body h2 {
+            color: var(--blue);
+            margin-top: 30px;
+        }
+        
+        @media(max-width: 768px) {
+            .page-container {
+                padding: 25px 15px;
+                margin-top: 0;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
             }
-        });
+        }
+        
+        /* =========================================
+           ABOUT US & TEAM SECTION
+        ========================================= */
+        .about-container {
+            max-width: 1000px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .about-header h1 {
+            color: var(--navy);
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+        
+        .about-header p {
+            color: var(--muted);
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        .mission-box {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .mission-box h2 {
+            color: var(--blue);
+            font-size: 26px;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .mission-box p {
+            color: var(--text);
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .team-section h2 {
+            text-align: center;
+            color: var(--navy);
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--blue);
+        }
+        
+        .team-card img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #F8FAFC;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+        
+        .team-card h3 {
+            color: var(--navy);
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 8px;
+        }
+        
+        .team-card .role {
+            color: var(--orange);
+            font-weight: 700;
+            font-size: 15px;
+            margin: 0 0 15px;
+            background: #FFF5F1;
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 50px;
+        }
+        
+        .team-card .bio {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        @media(max-width: 768px) {
+            .about-header h1 {
+                font-size: 32px;
+            }
+            
+            .mission-box {
+                padding: 30px 20px;
+            }
+            
+            .team-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
 
-        // Close the menu automatically when any link is clicked
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-                hamburger.innerHTML = '☰';
-                hamburger.style.transform = 'rotate(0deg)';
+<body>
+    
+    <nav class="nav">
+        <a class="brand" href="index.html"><img src="logo.svg" alt="EduNaukri logo" onerror="this.style.display='none'">Edu<span>Naukri</span></a>
+        <button class="hamburger" id="hamburgerMenu">☰</button>
+        <div class="menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="index.html#jobs">Government Jobs</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <div class="page-container">
+            <h1 class="page-title">About EduNaukri</h1>
+            
+            <div class="content-body">
+                <p>Welcome to <strong>EduNaukri</strong>, your number one source for all things related to Government and Private Jobs, Admit Cards, Results, and educational notifications across India.</p>
+                
+                <h2>Our Mission</h2>
+                <p>We are dedicated to providing you the very best and fastest updates on employment opportunities, with an emphasis on accuracy, timely delivery, and user-friendly experience. Finding the right job notification in a sea of fake news can be difficult. At EduNaukri, our mission is to simplify this process for millions of students and job seekers.</p>
+                
+                <h2>What We Offer</h2>
+                <ul>
+                    <li><strong>Latest Government Jobs:</strong> Real-time updates on UPSC, SSC, Banking, Railways, and State-level recruitments.</li>
+                    <li><strong>Admit Cards & Results:</strong> Direct links to download your exam admit cards and check results without any hassle.</li>
+                    <li><strong>Syllabus & Exam Pattern:</strong> Detailed breakdowns of exam requirements to help you prepare better.</li>
+                </ul>
+                
+                <h2>Our Story</h2>
+                <p>Founded in 2026, EduNaukri has come a long way from its beginnings. When we first started out, our passion for helping students find genuine employment resources drove us to build a platform that is clean, fast, and reliable.</p>
+                
+                <p>We hope you enjoy our services as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to <a href="contact.html" style="color: var(--blue); text-decoration: underline;">contact us</a>.</p>
+            </div>
+        </div>
+            <main class="about-container">
+        
+        <div class="about-header">
+            <h1>About EduNaukri</h1>
+            <p>India's most trusted platform for latest government jobs, private jobs, syllabus, admit cards, and results. We believe in providing accurate information at lightning speed.</p>
+        </div>
+
+        <div class="mission-box">
+            <h2>Our Mission</h2>
+            <p>Our sole mission is to empower students and job seekers across India by bridging the gap between them and their dream careers. We cut through the noise to deliver verified, high-quality, and easy-to-understand educational updates directly to your screen.</p>
+        </div>
+
+        <div class="team-section">
+            <h2>Meet The Core Team</h2>
+            <div class="team-grid">
+                
+                <!-- Card 1: Deepak Choudhary -->
+                <div class="team-card">
+                    <!-- Photo update karne ke liye niche src="" mein nayi link daal dein -->
+                    <img src="https://ui-avatars.com/api/?name=Deepak+Choudhary&background=0b205d&color=fff&size=200&font-size=0.4&bold=true" alt="Deepak Choudhary">
+                    <h3>Deepak Choudhary</h3>
+                    <div class="role">Founder & Author</div>
+                    <p class="bio">Deepak is the visionary behind EduNaukri. With a deep understanding of the education sector, he curates the most authentic and reliable job notifications, ensuring that no student misses out on a crucial career opportunity.</p>
+                </div>
+
+                <!-- Card 2: Sachin Nitharwal -->
+                <div class="team-card">
+                    <!-- Photo update karne ke liye niche src="" mein nayi link daal dein -->
+                    <img src="https://ui-avatars.com/api/?name=Sachin+Nitharwal&background=ff4500&color=fff&size=200&font-size=0.4&bold=true" alt="Sachin Nitharwal">
+                    <h3>Sachin Nitharwal</h3>
+                    <div class="role">Co-Founder & Lead Developer</div>
+                    <p class="bio">Sachin leads the technical architecture and UI/UX design of EduNaukri. He ensures that the platform remains fast, secure, and provides a premium, seamless reading experience for users across all devices.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    </main>
+    
+    <footer class="footer">
+        <div class="copy">© 2026 EduNaukri. All Rights Reserved.</div>
+    </footer>
+    <script>
+        // --- Mobile Hamburger Menu Logic ---
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                // Toggle the menu visibility
+                navMenu.classList.toggle('show-menu');
+                
+                // Change icon from Hamburger (☰) to Close (✕)
+                if (navMenu.classList.contains('show-menu')) {
+                    hamburger.innerHTML = '✕';
+                    hamburger.style.transform = 'rotate(90deg)';
+                } else {
+                    hamburger.innerHTML = '☰';
+                    hamburger.style.transform = 'rotate(0deg)';
+                }
             });
-        });
-    }
-</script>
-<script src="script.js"></script>
+            
+            // Close the menu automatically when any link is clicked
+            document.querySelectorAll('.menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('show-menu');
+                    hamburger.innerHTML = '☰';
+                    hamburger.style.transform = 'rotate(0deg)';
+                });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
