@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Resizer & Compressor</title>
+<meta name="description" content="Resize and compress images online for free. Supports JPG, PNG and WebP.">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#0757d9;
+    --primary-dark:#064bbd;
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#dfe5ee;
+    --soft:#eef4ff;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+header{
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    padding:18px 20px;
+}
+
+.logo{
+    max-width:1050px;
+    margin:auto;
+    font-size:22px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.logo span{
+    color:#111;
+}
+
+.container{
+    width:min(950px,calc(100% - 28px));
+    margin:38px auto;
+}
+
+.hero{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(30px,6vw,46px);
+    line-height:1.12;
+    margin-bottom:12px;
+}
+
+.hero h1 span{
+    color:var(--primary);
+}
+
+.hero p{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 8px 30px rgba(16,24,40,.06);
+}
+
+.upload-box{
+    border:2px dashed #cbd5e1;
+    border-radius:14px;
+    padding:35px 20px;
+    text-align:center;
+    cursor:pointer;
+    background:#fafcff;
+    transition:.2s;
+}
+
+.upload-box:hover{
+    border-color:var(--primary);
+    background:#f6f9ff;
+}
+
+.upload-icon{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.upload-box h3{
+    margin-bottom:7px;
+}
+
+.upload-box p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+#fileInput{
+    display:none;
+}
+
+.editor{
+    display:none;
+    margin-top:20px;
+}
+
+.preview-area{
+    background:#f1f4f8;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px;
+    text-align:center;
+}
+
+.preview{
+    max-width:100%;
+    max-height:420px;
+    object-fit:contain;
+    border-radius:9px;
+}
+
+.file-info{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.controls{
+    margin-top:18px;
+}
+
+.control-title{
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field label{
+    font-size:13px;
+    font-weight:700;
+}
+
+input[type="number"],
+select{
+    width:100%;
+    height:45px;
+    border:1px solid #cfd7e3;
+    border-radius:9px;
+    padding:0 12px;
+    font-size:14px;
+    outline:none;
+    background:#fff;
+}
+
+input[type="number"]:focus,
+select:focus{
+    border-color:var(--primary);
+}
+
+.checkbox{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+    font-size:14px;
+    color:#344054;
+}
+
+.checkbox input{
+    width:17px;
+    height:17px;
+}
+
+.quality{
+    margin-top:18px;
+}
+
+.range-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+input[type="range"]{
+    flex:1;
+    accent-color:var(--primary);
+}
+
+#qualityValue{
+    min-width:45px;
+    font-weight:700;
+    text-align:right;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    height:50px;
+    border:0;
+    border-radius:10px;
+    padding:0 18px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.primary:hover{
+    background:var(--primary-dark);
+}
+
+.secondary{
+    background:var(--soft);
+    color:var(--primary);
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.result{
+    display:none;
+    margin-top:20px;
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+}
+
+.result h3{
+    margin-bottom:12px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.stat{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:13px;
+    text-align:center;
+}
+
+.stat small{
+    display:block;
+    color:var(--muted);
+    margin-bottom:5px;
+}
+
+.stat strong{
+    font-size:15px;
+}
+
+.download{
+    width:100%;
+    margin-top:14px;
+    background:var(--primary);
+    color:#fff;
+}
+
+.message{
+    display:none;
+    margin-top:12px;
+    color:#d92d20;
+    font-size:14px;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:18px;
+}
+
+.feature{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+}
+
+.feature-icon{
+    font-size:25px;
+}
+
+.feature b{
+    display:block;
+    margin:7px 0 5px;
+}
+
+.feature p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    padding:25px 15px;
+}
+
+@media(max-width:650px){
+
+    .container{
+        margin:25px auto;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .buttons{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        Image<span>Tools</span>
+    </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+    <h1>Image <span>Resizer & Compressor</span></h1>
+    <p>
+        Resize, compress and convert your images quickly.
+        Everything happens directly in your browser.
+    </p>
+</section>
+
+<section class="card">
+
+    <!-- Upload -->
+    <label class="upload-box" for="fileInput">
+        <div class="upload-icon">🖼️</div>
+        <h3>Upload Your Image</h3>
+        <p>Click here to select JPG, PNG or WebP</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+    </label>
+
+    <div id="message" class="message"></div>
+
+    <!-- Editor -->
+    <div id="editor" class="editor">
+
+        <div class="preview-area">
+            <img id="preview" class="preview" alt="Image preview">
+            <div id="fileInfo" class="file-info"></div>
+        </div>
+
+        <div class="controls">
+
+            <div class="control-title">
+                Resize Image
+            </div>
+
+            <div class="grid">
+
+                <div class="field">
+                    <label for="width">Width (px)</label>
+                    <input type="number" id="width" min="1">
+                </div>
+
+                <div class="field">
+                    <label for="height">Height (px)</label>
+                    <input type="number" id="height" min="1">
+                </div>
+
+            </div>
+
+            <label class="checkbox">
+                <input type="checkbox" id="lockRatio" checked>
+                Maintain aspect ratio
+            </label>
+
+            <div class="controls">
+
+                <div class="control-title">
+                    Output Format
+                </div>
+
+                <select id="format">
+                    <option value="image/jpeg">JPG</option>
+                    <option value="image/png">PNG</option>
+                    <option value="image/webp">WebP</option>
+                </select>
+
+            </div>
+
+            <div class="quality">
+
+                <div class="control-title">
+                    Image Quality
+                </div>
+
+                <div class="range-row">
+                    <input
+                        type="range"
+                        id="quality"
+                        min="10"
+                        max="100"
+                        value="80"
+                    >
+                    <span id="qualityValue">80%</span>
+                </div>
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="primary"
+                    id="processBtn"
+                    onclick="processImage()"
+                >
+                    Resize & Compress
+                </button>
+
+                <button
+                    class="secondary"
+                    onclick="resetTool()"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Result -->
+        <div id="result" class="result">
+
+            <h3>Processed Image</h3>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <small>Original Size</small>
+                    <strong id="originalSize">-</strong>
+                </div>
+
+                <div class="stat">
+                    <small>New Size</small>
+                    <strong id="newSize">-</strong>
+                </div>
+
+                <div class="stat">
+                    <small>Reduction</small>
+                    <strong id="reduction">-</strong>
+                </div>
+
+            </div>
+
+            <button
+                id="downloadBtn"
+                class="download"
+                onclick="downloadImage()"
+            >
+                Download Image
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="features">
+
+    <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <b>Fast Processing</b>
+        <p>Images are processed directly in your browser.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <b>Private</b>
+        <p>Your image doesn't need to be uploaded to a server.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">📱</div>
+        <b>Mobile Friendly</b>
+        <p>Works smoothly on phones, tablets and computers.</p>
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    © <span id="year"></span> Image Tools
+</footer>
+
+
+<script>
+
+let selectedFile = null;
+let originalImage = null;
+let processedBlob = null;
+let processedURL = null;
+
+const fileInput = document.getElementById("fileInput");
+const editor = document.getElementById("editor");
+const preview = document.getElementById("preview");
+const fileInfo = document.getElementById("fileInfo");
+const widthInput = document.getElementById("width");
+const heightInput = document.getElementById("height");
+const qualityInput = document.getElementById("quality");
+const qualityValue = document.getElementById("qualityValue");
+const formatSelect = document.getElementById("format");
+const result = document.getElementById("result");
+const message = document.getElementById("message");
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+
+// ------------------------------
+// FILE UPLOAD
+// ------------------------------
+
+fileInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(!file){
+        return;
+    }
+
+    if(!file.type.startsWith("image/")){
+        showError("Please select a valid image file.");
+        return;
+    }
+
+    selectedFile = file;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        preview.src = e.target.result;
+
+        preview.onload = function(){
+
+            originalImage = preview;
+
+            widthInput.value = preview.naturalWidth;
+            heightInput.value = preview.naturalHeight;
+
+            fileInfo.textContent =
+                `${file.name} • ${preview.naturalWidth} × ${preview.naturalHeight} • ${formatBytes(file.size)}`;
+
+            editor.style.display = "block";
+
+            result.style.display = "none";
+
+            message.style.display = "none";
+        };
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+// ------------------------------
+// QUALITY SLIDER
+// ------------------------------
+
+qualityInput.addEventListener("input", function(){
+
+    qualityValue.textContent = this.value + "%";
+
+});
+
+
+// ------------------------------
+// ASPECT RATIO
+// ------------------------------
+
+let changingWidth = false;
+let changingHeight = false;
+
+widthInput.addEventListener("input", function(){
+
+    if(
+        document.getElementById("lockRatio").checked &&
+        originalImage &&
+        !changingWidth
+    ){
+
+        changingHeight = true;
+
+        const ratio =
+            originalImage.naturalHeight /
+            originalImage.naturalWidth;
+
+        heightInput.value =
+            Math.round(Number(widthInput.value) * ratio);
+
+        changingHeight = false;
+    }
+
+});
+
+
+heightInput.addEventListener("input", function(){
+
+    if(
+        document.getElementById("lockRatio").checked &&
+        originalImage &&
+        !changingHeight
+    ){
+
+        changingWidth = true;
+
+        const ratio =
+            originalImage.naturalWidth /
+            originalImage.naturalHeight;
+
+        widthInput.value =
+            Math.round(Number(heightInput.value) * ratio);
+
+        changingWidth = false;
+    }
+
+});
+
+
+// ------------------------------
+// PROCESS IMAGE
+// ------------------------------
+
+function processImage(){
+
+    if(!selectedFile || !originalImage){
+
+        showError("Please upload an image first.");
+
+        return;
+    }
+
+    const width = parseInt(widthInput.value);
+    const height = parseInt(heightInput.value);
+
+    if(!width || !height || width < 1 || height < 1){
+
+        showError("Please enter a valid width and height.");
+
+        return;
+    }
+
+    const button =
+        document.getElementById("processBtn");
+
+    button.disabled = true;
+    button.textContent = "Processing...";
+
+    setTimeout(function(){
+
+        const canvas =
+            document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx =
+            canvas.getContext("2d");
+
+        // White background for JPG
+        if(formatSelect.value === "image/jpeg"){
+
+            ctx.fillStyle = "#ffffff";
+
+            ctx.fillRect(
+                0,
+                0,
+                width,
+                height
+            );
+        }
+
+        ctx.drawImage(
+            originalImage,
+            0,
+            0,
+            width,
+            height
+        );
+
+        const quality =
+            Number(qualityInput.value) / 100;
+
+        canvas.toBlob(
+            function(blob){
+
+                if(!blob){
+
+                    showError(
+                        "Image processing failed. Please try again."
+                    );
+
+                    button.disabled = false;
+                    button.textContent =
+                        "Resize & Compress";
+
+                    return;
+                }
+
+                processedBlob = blob;
+
+                if(processedURL){
+
+                    URL.revokeObjectURL(processedURL);
+
+                }
+
+                processedURL =
+                    URL.createObjectURL(blob);
+
+                const originalSize =
+                    selectedFile.size;
+
+                const newSize =
+                    blob.size;
+
+                let reduction = 0;
+
+                if(originalSize > 0){
+
+                    reduction =
+                        ((originalSize - newSize) /
+                        originalSize) * 100;
+
+                }
+
+                document.getElementById("originalSize")
+                    .textContent =
+                    formatBytes(originalSize);
+
+                document.getElementById("newSize")
+                    .textContent =
+                    formatBytes(newSize);
+
+                document.getElementById("reduction")
+                    .textContent =
+                    reduction >= 0
+                    ? reduction.toFixed(1) + "%"
+                    : "Size increased";
+
+                result.style.display = "block";
+
+                result.scrollIntoView({
+                    behavior:"smooth",
+                    block:"nearest"
+                });
+
+                button.disabled = false;
+                button.textContent =
+                    "Resize & Compress";
+
+            },
+            formatSelect.value,
+            quality
+        );
+
+    },100);
+
+}
+
+
+// ------------------------------
+// DOWNLOAD
+// ------------------------------
+
+function downloadImage(){
+
+    if(!processedBlob){
+
+        showError(
+            "Please process the image first."
+        );
+
+        return;
+    }
+
+    const format =
+        formatSelect.value;
+
+    let extension = "jpg";
+
+    if(format === "image/png"){
+        extension = "png";
+    }
+
+    if(format === "image/webp"){
+        extension = "webp";
+    }
+
+    const url =
+        URL.createObjectURL(processedBlob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "compressed-image." + extension;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(function(){
+
+        URL.revokeObjectURL(url);
+
+    },1000);
+
+}
+
+
+// ------------------------------
+// RESET
+// ------------------------------
+
+function resetTool(){
+
+    selectedFile = null;
+    originalImage = null;
+    processedBlob = null;
+
+    if(processedURL){
+
+        URL.revokeObjectURL(processedURL);
+
+        processedURL = null;
+    }
+
+    fileInput.value = "";
+
+    widthInput.value = "";
+    heightInput.value = "";
+
+    editor.style.display = "none";
+    result.style.display = "none";
+    message.style.display = "none";
+
+}
+
+
+// ------------------------------
+// ERROR
+// ------------------------------
+
+function showError(text){
+
+    message.textContent = text;
+
+    message.style.display = "block";
+
+}
+
+
+// ------------------------------
+// FILE SIZE
+// ------------------------------
+
+function formatBytes(bytes){
+
+    if(bytes === 0){
+        return "0 Bytes";
+    }
+
+    const units =
+        ["Bytes","KB","MB","GB"];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        parseFloat(
+            (bytes / Math.pow(1024,i))
+            .toFixed(2)
+        )
+        + " "
+        + units[i]
+    );
+
+}
+
+</script>
+
+</body>
+</html>
