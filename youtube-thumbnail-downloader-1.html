@@ -30,7 +30,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .preview{display:block;width:100%;max-height:500px;object-fit:contain;border-radius:9px}
 .video-id{margin-top:10px;color:var(--muted);font-size:13px}
 .actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-.action{display:flex;align-items:center;justify-content:center;text-decoration:none;height:48px;border-radius:10px;background:#eef4ff;color:var(--primary);font-weight:700;font-size:14px;border:1px solid #d8e5ff}
+.action{display:flex;align-items:center;justify-content:center;text-decoration:none;height:48px;border-radius:10px;background:#eef4ff;color:var(--primary);font-weight:700;font-size:14px;border:1px solid #d8e5ff;width:100%;padding:0 12px}
 .action.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
 .note{font-size:12px;color:var(--muted);line-height:1.5;text-align:center;margin-top:13px}
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
@@ -74,9 +74,9 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:25px 15px}
       </div>
 
       <div class="actions">
-        <a id="downloadMax" class="action primary" href="#" target="_blank" rel="noopener">Download HD</a>
-        <a id="downloadHQ" class="action" href="#" target="_blank" rel="noopener">Download HQ</a>
-        <a id="downloadMQ" class="action" href="#" target="_blank" rel="noopener">Download SD</a>
+        <button id="downloadMax" class="action primary" type="button" onclick="downloadThumbnail('maxresdefault','HD')">Download HD</button>
+        <button id="downloadHQ" class="action" type="button" onclick="downloadThumbnail('hqdefault','HQ')">Download HQ</button>
+        <button id="downloadMQ" class="action" type="button" onclick="downloadThumbnail('mqdefault','SD')">Download SD</button>
       </div>
       <p class="note">If your browser opens the image instead of downloading it, long-press/right-click the image and choose “Save image”.</p>
     </div>
@@ -97,9 +97,6 @@ const message = document.getElementById('message');
 const result = document.getElementById('result');
 const preview = document.getElementById('preview');
 const videoIdText = document.getElementById('videoIdText');
-const maxLink = document.getElementById('downloadMax');
-const hqLink = document.getElementById('downloadHQ');
-const mqLink = document.getElementById('downloadMQ');
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -172,11 +169,60 @@ function getThumbnail(){
   preview.src = max;
   videoIdText.textContent = 'Video ID: ' + id;
 
-  maxLink.href = max;
-  hqLink.href = hq;
-  mqLink.href = mq;
+  // Store the current video ID for the download buttons.
+  window.currentVideoId = id;
 
   result.style.display = 'block';
+}
+
+async function downloadThumbnail(quality, label){
+  const id = window.currentVideoId;
+  if(!id) return;
+
+  const url = `https://img.youtube.com/vi/${id}/${quality}.jpg`;
+  const button = document.querySelector(
+    quality === 'maxresdefault' ? '#downloadMax' :
+    quality === 'hqdefault' ? '#downloadHQ' : '#downloadMQ'
+  );
+
+  const originalText = button.textContent;
+  button.textContent = 'Downloading...';
+  button.disabled = true;
+
+  try{
+    const response = await fetch(url, {mode:'cors', cache:'no-store'});
+    if(!response.ok) throw new Error('Image unavailable');
+
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = `youtube-thumbnail-${id}-${label.toLowerCase()}.jpg`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1500);
+  }catch(error){
+    // Fallback for browsers/environments that block cross-origin downloads.
+    // The image URL is still opened directly instead of silently failing.
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `youtube-thumbnail-${id}-${label.toLowerCase()}.jpg`;
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => {
+      message.textContent = 'Your browser blocked direct downloading. If the image opened, long-press it and choose “Download image”.';
+      message.style.display = 'block';
+    }, 300);
+  }finally{
+    button.textContent = originalText;
+    button.disabled = false;
+  }
 }
 </script>
 </body>
