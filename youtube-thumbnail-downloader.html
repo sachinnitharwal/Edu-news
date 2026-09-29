@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Thumbnail Downloader</title>
+<meta name="description" content="Download YouTube video thumbnails in HD, SD and standard quality. Fast, free and easy to use.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#0757d9;--primary2:#1268e8;--bg:#f4f7fb;--text:#172033;--muted:#667085;--border:#dfe5ee}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:#fff;border-bottom:1px solid var(--border);padding:18px 20px}
+.logo{max-width:1050px;margin:auto;font-size:22px;font-weight:800;color:var(--primary)}
+.logo span{color:#111}
+.container{width:min(920px,calc(100% - 28px));margin:42px auto}
+.hero{text-align:center;margin-bottom:26px}
+.hero h1{font-size:clamp(30px,6vw,48px);line-height:1.1;margin-bottom:12px}
+.hero h1 span{color:var(--primary)}
+.hero p{color:var(--muted);font-size:16px;line-height:1.6}
+.card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 8px 30px rgba(16,24,40,.06)}
+.form{display:flex;gap:10px}
+input{flex:1;height:52px;border:1px solid #cfd7e3;border-radius:11px;padding:0 15px;font-size:15px;outline:none;min-width:0}
+input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(7,87,217,.10)}
+button{border:0;border-radius:11px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;padding:0 23px;height:52px;cursor:pointer}
+button:hover{background:#064bbd}
+button:disabled{opacity:.6;cursor:not-allowed}
+.message{margin-top:12px;color:#d92d20;font-size:14px;display:none}
+.result{display:none;margin-top:24px}
+.preview-wrap{background:#f1f4f8;border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center}
+.preview{display:block;width:100%;max-height:500px;object-fit:contain;border-radius:9px}
+.video-id{margin-top:10px;color:var(--muted);font-size:13px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.action{display:flex;align-items:center;justify-content:center;text-decoration:none;height:48px;border-radius:10px;background:#eef4ff;color:var(--primary);font-weight:700;font-size:14px;border:1px solid #d8e5ff}
+.action.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.note{font-size:12px;color:var(--muted);line-height:1.5;text-align:center;margin-top:13px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.feature{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.feature b{display:block;margin:7px 0 5px}
+.feature p{font-size:13px;color:var(--muted);line-height:1.5}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:25px 15px}
+@media(max-width:650px){
+ .container{margin:28px auto}
+ .form{flex-direction:column}
+ button{width:100%}
+ .actions{grid-template-columns:1fr}
+ .features{grid-template-columns:1fr}
+ .card{padding:15px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Thumbnail<span>Downloader</span></div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>YouTube Thumbnail <span>Downloader</span></h1>
+    <p>Paste a YouTube video link and download its available thumbnail in high quality.</p>
+  </section>
+
+  <section class="card">
+    <div class="form">
+      <input id="urlInput" type="url" placeholder="Paste YouTube video URL here..." autocomplete="off">
+      <button id="getBtn" onclick="getThumbnail()">Get Thumbnail</button>
+    </div>
+    <div id="message" class="message"></div>
+
+    <div id="result" class="result">
+      <div class="preview-wrap">
+        <img id="preview" class="preview" alt="YouTube thumbnail preview">
+        <div id="videoIdText" class="video-id"></div>
+      </div>
+
+      <div class="actions">
+        <a id="downloadMax" class="action primary" href="#" target="_blank" rel="noopener">Download HD</a>
+        <a id="downloadHQ" class="action" href="#" target="_blank" rel="noopener">Download HQ</a>
+        <a id="downloadMQ" class="action" href="#" target="_blank" rel="noopener">Download SD</a>
+      </div>
+      <p class="note">If your browser opens the image instead of downloading it, long-press/right-click the image and choose “Save image”.</p>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature"><div>⚡</div><b>Fast</b><p>No sign-up or API key required.</p></div>
+    <div class="feature"><div>🖼️</div><b>HD Preview</b><p>View the highest available thumbnail.</p></div>
+    <div class="feature"><div>📱</div><b>Mobile Friendly</b><p>Works on phones, tablets and desktops.</p></div>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> Thumbnail Downloader</footer>
+
+<script>
+const input = document.getElementById('urlInput');
+const message = document.getElementById('message');
+const result = document.getElementById('result');
+const preview = document.getElementById('preview');
+const videoIdText = document.getElementById('videoIdText');
+const maxLink = document.getElementById('downloadMax');
+const hqLink = document.getElementById('downloadHQ');
+const mqLink = document.getElementById('downloadMQ');
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+input.addEventListener('keydown', e => {
+  if(e.key === 'Enter') getThumbnail();
+});
+
+function extractVideoId(value){
+  value = value.trim();
+  if(!value) return null;
+
+  // Accepts youtube.com/watch?v=, youtu.be/, youtube.com/shorts/, embed/ and /live/
+  try{
+    const u = new URL(value);
+    const host = u.hostname.toLowerCase().replace(/^www\./,'').replace(/^m\./,'');
+
+    if(host === 'youtu.be'){
+      return cleanId(u.pathname.slice(1));
+    }
+
+    if(host === 'youtube.com' || host === 'youtube-nocookie.com'){
+      if(u.pathname === '/watch') return cleanId(u.searchParams.get('v'));
+      const parts = u.pathname.split('/').filter(Boolean);
+      if(parts.length >= 2 && ['shorts','embed','live'].includes(parts[0])){
+        return cleanId(parts[1]);
+      }
+    }
+  }catch(e){}
+
+  // If user pasted just a video ID
+  if(/^[A-Za-z0-9_-]{11}$/.test(value)) return value;
+  return null;
+}
+
+function cleanId(id){
+  if(!id) return null;
+  id = String(id).split(/[?&#/]/)[0];
+  return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+}
+
+function showError(text){
+  message.textContent = text;
+  message.style.display = 'block';
+  result.style.display = 'none';
+}
+
+function getThumbnail(){
+  const id = extractVideoId(input.value);
+
+  if(!id){
+    showError('Please enter a valid YouTube video, Shorts or youtu.be link.');
+    return;
+  }
+
+  message.style.display = 'none';
+
+  const max = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+  const hq = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  const mq = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+
+  preview.onerror = function(){
+    // maxresdefault is not available for every video; fall back to HQ.
+    if(preview.src !== hq){
+      preview.src = hq;
+    }else{
+      showError('Thumbnail could not be loaded for this video.');
+    }
+  };
+
+  preview.src = max;
+  videoIdText.textContent = 'Video ID: ' + id;
+
+  maxLink.href = max;
+  hqLink.href = hq;
+  mqLink.href = mq;
+
+  result.style.display = 'block';
+}
+</script>
+</body>
+</html>
