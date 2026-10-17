@@ -1,170 +1,227 @@
-// 1. Initialize Supabase Connection
+// Supabase browser client — project URL/key and category values are preserved.
 const SUPABASE_URL = 'https://coeemddusgoafawggwsl.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Map HTML list IDs to Database Categories (PURANI VALUES USE KI GAYI HAIN)
 const categoryMapping = {
-    'jobsList': 'jobs',
-    'admitList': 'admit-cards',
-    'resultList': 'results',
-    'othersList': 'answer-keys',       // Name 'Others' but DB value 'answer-keys'
-    'admissionList': 'admission', 
-    'syllabusList': 'syllabus'         // Name 'Sarkari Yojana' but DB value 'syllabus'
+  jobsList: 'jobs',
+  admitList: 'admit-cards',
+  resultList: 'results',
+  othersList: 'answer-keys',
+  admissionList: 'admission',
+  syllabusList: 'syllabus'
 };
 
-// Main function to fetch and render data for a specific column
-async function fetchAndRender(dbCategory, listElementId, stateFilter, searchQuery = '') {
-    const listElement = document.getElementById(listElementId);
-    listElement.innerHTML = '<li style="padding: 16px 0; font-size: 14px;">Loading...</li>';
-    
-    let query = supabaseClient
-        .from('jobs')
-        .select('*')
-        .eq('category', dbCategory)
-        .order('created_at', { ascending: false })
-        .limit(11); 
-        
-    if (stateFilter !== 'all') {
-        query = query.eq('state', stateFilter);
-    }
-    
-    if (searchQuery) {
-        query = query.ilike('title', `%${searchQuery}%`);
-    }
-    
-    const { data, error } = await query;
-    
-    if (error) {
-        console.error(`Error fetching ${dbCategory}:`, error);
-        listElement.innerHTML = '<li style="padding: 16px 0; font-size: 14px; color: red;">Error loading data</li>';
-        return;
-    }
-    
-    listElement.innerHTML = ''; 
-    
-    if (data.length === 0) {
-        listElement.innerHTML = '<li style="padding: 16px 0; font-size: 14px; color: #667085;">No updates found.</li>';
-        return;
-    }
-    
-    const hasMore = data.length > 10;
-    const postsToRender = hasMore ? data.slice(0, 10) : data; 
-    
-    postsToRender.forEach(item => {
-        const li = document.createElement('li');
-        const badge = item.is_new ? '<span class="new-badge">NEW</span>' : '';
-        const dateObj = new Date(item.created_at);
-        const monthYear = dateObj.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+const categoryLabels = {
+  jobs: 'Job Notification',
+  'admit-cards': 'Admit Card',
+  results: 'Result',
+  'answer-keys': 'Others',
+  admission: 'Admission',
+  syllabus: 'Govt Scheme'
+};
+const pageURLs = {
+  jobs: 'latest-jobs.html',
+  'admit-cards': 'admit-cards.html',
+  results: 'results.html',
+  'answer-keys': 'answer-keys.html',
+  admission: 'admission.html',
+  syllabus: 'sarkari-yojana.html'
+};
 
-        // Clean URL Logic: Use slug if available, else fallback to old ID format
-        const postLink = item.slug ? `/post/${item.slug}` : `job-details.html?id=${item.id}`;
+function detailUrl(item) {
+  return item.slug ? `/post/${encodeURIComponent(item.slug)}` : `job-details.html?id=${encodeURIComponent(item.id)}`;
+}
 
-        li.innerHTML = `
-            <a href="${postLink}">${item.title} ${badge}</a>
-            <span class="list-date">🗓️ ${monthYear}</span>
-        `;
-        listElement.appendChild(li);
-    });
+function createPostRow(item, includeCategory = false) {
+  const li = document.createElement('li');
+  const link = document.createElement('a');
+  link.href = detailUrl(item);
+  link.className = 'post-title';
+  link.append(document.createTextNode(item.title || 'Untitled notification'));
+  if (item.is_new) {
+    const badge = document.createElement('span');
+    badge.className = 'new-badge';
+    badge.textContent = 'NEW';
+    link.append(' ', badge);
+  }
+  const meta = document.createElement('span');
+  meta.className = 'list-date';
+  const date = new Date(item.created_at);
+  meta.textContent = Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+  if (includeCategory) {
+    li.classList.add('update-card');
+    const category = document.createElement('span');
+    category.className = 'update-category';
+    category.textContent = categoryLabels[item.category] || item.category || 'Update';
+    li.append(category, link);
 
-    if (hasMore) {
-        const btnLi = document.createElement('li');
-        btnLi.style.textAlign = 'center';
-        btnLi.style.borderBottom = 'none';
-        btnLi.style.paddingTop = '12px';
-        
-        // Display Text Change logic
-        let readableCategory = dbCategory.replace('-', ' ').toUpperCase();
-        if (dbCategory === 'answer-keys') readableCategory = 'OTHERS';
-        if (dbCategory === 'syllabus') readableCategory = 'SARKARI YOJANA';
-        
-        const pageURLs = {
-            'jobs': 'latest-jobs.html',
-            'admit-cards': 'admit-cards.html',
-            'results': 'results.html',
-            'answer-keys': 'others.html',
-            'admission': 'admission.html',
-            'syllabus': 'sarkari-yojana.html'
-        };
-        
-        const targetPage = pageURLs[dbCategory] || '#';
-        
-        btnLi.innerHTML = `<a href="${targetPage}" class="view-all-btn">View All ${readableCategory} ➔</a>`;
-        listElement.appendChild(btnLi);
+    const parsedContent = new DOMParser().parseFromString(item.content_html || '', 'text/html');
+    parsedContent.querySelectorAll('script, style, iframe').forEach(node => node.remove());
+    const summaryText = (parsedContent.body.textContent || '').replace(/\s+/g, ' ').trim();
+    if (summaryText) {
+      const summary = document.createElement('p');
+      summary.className = 'update-summary';
+      summary.textContent = summaryText.length > 118 ? `${summaryText.slice(0, 115).trimEnd()}…` : summaryText;
+      li.append(summary);
     }
+
+    const footer = document.createElement('div');
+    footer.className = 'update-meta';
+    footer.append(meta);
+    const readMore = document.createElement('a');
+    readMore.href = link.href;
+    readMore.className = 'update-readmore';
+    readMore.textContent = 'Read More →';
+    footer.append(readMore);
+    li.append(footer);
+  } else {
+    li.append(link, meta);
+  }
+  return li;
+}
+
+function showMessage(list, text, type = 'empty') {
+  list.replaceChildren();
+  const li = document.createElement('li');
+  li.className = `list-message ${type}`;
+  li.textContent = text;
+  if (type === 'error') {
+    const retry = document.createElement('button');
+    retry.type = 'button';
+    retry.className = 'retry-button';
+    retry.textContent = 'Try again';
+    retry.addEventListener('click', () => loadAllColumns(document.getElementById('searchInput').value.trim()));
+    li.append(' ', retry);
+  }
+  list.append(li);
+}
+
+async function fetchAndRender(dbCategory, listElementId, stateFilter = 'all', searchQuery = '', categoryFilter = 'all') {
+  const list = document.getElementById(listElementId);
+  if (!list) return;
+  list.classList.add('is-loading');
+  showMessage(list, 'अपडेट लोड हो रहे हैं…', 'loading');
+
+  let query = supabaseClient.from('jobs').select('*').eq('category', dbCategory)
+    .order('created_at', { ascending: false }).limit(6);
+  if (stateFilter !== 'all') query = query.eq('state', stateFilter);
+  if (searchQuery) query = query.ilike('title', `%${searchQuery}%`);
+  if (categoryFilter !== 'all' && categoryFilter !== dbCategory) {
+    showMessage(list, 'इस श्रेणी में कोई अपडेट नहीं मिला।');
+    list.classList.remove('is-loading');
+    return;
+  }
+
+  const { data, error } = await query;
+  list.classList.remove('is-loading');
+  if (error) {
+    console.error(`Error fetching ${dbCategory}:`, error);
+    showMessage(list, 'अपडेट लोड नहीं हो सके।', 'error');
+    return;
+  }
+  list.replaceChildren();
+  const posts = (data || []).slice(0, 5);
+  if (!posts.length) {
+    showMessage(list, searchQuery ? 'आपकी खोज से मेल खाती पोस्ट नहीं मिली।' : 'अभी कोई अपडेट उपलब्ध नहीं है।');
+    return;
+  }
+  posts.forEach(item => list.append(createPostRow(item)));
+  if ((data || []).length > 5) {
+    const moreRow = document.createElement('li');
+    moreRow.className = 'view-all-row';
+    const more = document.createElement('a');
+    more.href = pageURLs[dbCategory];
+    more.className = 'view-all-btn';
+    more.textContent = `View All ${categoryLabels[dbCategory]} →`;
+    moreRow.append(more);
+    list.append(moreRow);
+  }
+}
+
+async function loadLatestUpdates(searchQuery = '') {
+  const list = document.getElementById('latestUpdatesList');
+  if (!list) return;
+  list.classList.add('is-loading');
+  showMessage(list, 'नए अपडेट लोड हो रहे हैं…', 'loading');
+  let query = supabaseClient.from('jobs').select('*').order('created_at', { ascending: false }).limit(4);
+  if (searchQuery) query = query.ilike('title', `%${searchQuery}%`);
+  const { data, error } = await query;
+  list.classList.remove('is-loading');
+  if (error) {
+    console.error('Error fetching latest updates:', error);
+    showMessage(list, 'नए अपडेट लोड नहीं हो सके।', 'error');
+    return;
+  }
+  list.replaceChildren();
+  if (!data || !data.length) {
+    showMessage(list, searchQuery ? 'आपकी खोज से मेल खाती पोस्ट नहीं मिली।' : 'अभी कोई अपडेट उपलब्ध नहीं है।');
+    return;
+  }
+  data.forEach(item => list.append(createPostRow(item, true)));
 }
 
 async function loadAllColumns(searchQuery = '') {
-    for (const [listId, dbCategory] of Object.entries(categoryMapping)) {
-        const section = document.getElementById(listId).closest('.portal-column');
-        const currentStateFilter = section.querySelector('.mini-filter').value;
-        await fetchAndRender(dbCategory, listId, currentStateFilter, searchQuery);
-    }
+  const categoryFilter = document.getElementById('category').value;
+  await Promise.all(Object.entries(categoryMapping).map(([listId, dbCategory]) => {
+    const section = document.getElementById(listId)?.closest('.portal-column');
+    if (section) section.hidden = categoryFilter !== 'all' && dbCategory !== categoryFilter;
+    const state = section?.querySelector('.mini-filter')?.value || 'all';
+    return fetchAndRender(dbCategory, listId, state, searchQuery, categoryFilter);
+  }));
+  await loadLatestUpdates(searchQuery);
 }
 
 function searchJobs() {
-    const q = document.getElementById('searchInput').value.trim();
-    loadAllColumns(q); 
-    document.getElementById('jobs').scrollIntoView({ behavior: 'smooth' });
+  loadAllColumns(document.getElementById('searchInput').value.trim());
+  document.getElementById('latest-updates').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function filterCategory(selectElement) {
-    const selectedState = selectElement.value;
-    const section = selectElement.closest('.portal-column');
-    const listId = section.querySelector('.link-list').id;
-    const dbCategory = categoryMapping[listId];
-    const currentSearchQuery = document.getElementById('searchInput').value.trim();
-    
-    fetchAndRender(dbCategory, listId, selectedState, currentSearchQuery);
+  const section = selectElement.closest('.portal-column');
+  const listId = section.querySelector('.link-list').id;
+  const query = document.getElementById('searchInput').value.trim();
+  fetchAndRender(categoryMapping[listId], listId, selectElement.value, query, document.getElementById('category').value);
 }
 
-function subscribe(e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    alert('Thanks! Email subscription received for ' + email);
-    document.getElementById('email').value = ''; 
+function subscribe(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value;
+  alert('Thanks! Email subscription received for ' + email);
+  document.getElementById('email').value = '';
 }
+window.searchJobs = searchJobs;
+window.filterCategory = filterCategory;
+window.subscribe = subscribe;
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadAllColumns();
-});
+  loadAllColumns();
+  const searchInput = document.getElementById('searchInput');
+  const categorySelect = document.getElementById('category');
+  searchInput.addEventListener('keydown', event => {
+    if (event.key === 'Enter') searchJobs();
+  });
+  categorySelect.addEventListener('change', () => loadAllColumns(searchInput.value.trim()));
 
-// Mobile Hamburger Menu
-const hamburger = document.getElementById('hamburgerMenu');
-const navMenu = document.getElementById('navMenu');
-
-if (hamburger && navMenu) {
+  const hamburger = document.getElementById('hamburgerMenu');
+  const navMenu = document.getElementById('navMenu');
+  if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('show-menu');
-        if (navMenu.classList.contains('show-menu')) {
-            hamburger.innerHTML = '✕';
-            hamburger.style.transform = 'rotate(90deg)';
-        } else {
-            hamburger.innerHTML = '☰';
-            hamburger.style.transform = 'rotate(0deg)';
-        }
+      const expanded = navMenu.classList.toggle('show-menu');
+      hamburger.textContent = expanded ? '×' : '☰';
+      hamburger.setAttribute('aria-expanded', String(expanded));
     });
-
-    document.querySelectorAll('.menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('show-menu');
-            hamburger.innerHTML = '☰';
-            hamburger.style.transform = 'rotate(0deg)';
-        });
-    });
-}
-
-// Scroll Reveal
-function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 50; 
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("active");
-        }
+    navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navMenu.classList.remove('show-menu');
+      hamburger.textContent = '☰';
+      hamburger.setAttribute('aria-expanded', 'false');
+    }));
+  }
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      observer.unobserve(entry.target);
     }
-}
-window.addEventListener("scroll", reveal);
-reveal();
+  }), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+});

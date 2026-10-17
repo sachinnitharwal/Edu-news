@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta name="google-adsense-account" content="ca-pub-9282641508923214">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9282641508923214"
@@ -46,13 +46,8 @@
 
 <!-- Modern Glassmorphism Navigation -->
 <nav class="nav">
-  <a class="brand" href="index.html">
-<a class="navbar-brand" href="index.html">
-    <img src="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" alt="Edu Naukri Logo" style="height: 40px; width: auto; object-fit: contain;">
-</a>
-
-
-
+  <a class="brand navbar-brand" href="index.html">
+    <img src="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" alt="Edu Naukri Logo">
   </a>
   <button class="hamburger" id="hamburgerMenu">☰</button>
   <div class="menu" id="navMenu">
@@ -77,10 +72,13 @@
       <div class="search">
         <input id="searchInput" placeholder="Search job by title, keyword...">
         <select id="category">
-          <option>All Categories</option>
-          <option>Govt Jobs</option>
-          <option>Private Jobs</option>
-          <option>Rajasthan</option>
+          <option value="all">All Categories</option>
+          <option value="jobs">Job Notifications</option>
+          <option value="admit-cards">Admit Cards</option>
+          <option value="results">Results</option>
+          <option value="answer-keys">Others</option>
+          <option value="admission">Admissions</option>
+          <option value="syllabus">Govt Scheme</option>
         </select>
         <button onclick="searchJobs()">Search</button>
       </div>
@@ -93,11 +91,11 @@
 <!-- Floating Quick Links (App Pills) -->
 <div class="quick-wrapper reveal">
   <div class="quick">
-    <a href="#jobs"><span class="icon">🏛️</span>Govt Jobs</a>
-    <a href="#jobs"><span class="icon">💼</span>Private Jobs</a>
-    <a href="#jobs"><span class="icon">📍</span>Rajasthan Jobs</a>
+    <a href="#jobs"><span class="icon">📣</span>Job Notification</a>
+    <a href="#latest-updates"><span class="icon">✨</span>Latest Updates</a>
     <a href="#admit-cards"><span class="icon">🪪</span>Admit Card</a>
     <a href="#results"><span class="icon">📊</span>Results</a>
+    <a href="#syllabus"><span class="icon">🏛️</span>Govt Scheme</a>
     <a href="#others"><span class="icon">🌟</span>Others</a>
     <a href="#admission"><span class="icon">🎓</span>Admissions</a>
   </div>
@@ -105,6 +103,13 @@
 
 <!-- Main Content Grid -->
 <main class="container">
+  <section class="portal-column latest-updates reveal" id="latest-updates">
+    <div class="col-head">
+      <div><h2>✨ Latest Updates</h2><p>नौकरी, एडमिट कार्ड, रिजल्ट और प्रवेश की ताज़ा खबरें</p></div>
+      <span class="latest-count">आज की हलचल</span>
+    </div>
+    <ul class="link-list" id="latestUpdatesList" aria-live="polite"></ul>
+  </section>
   <div class="portal-grid">
     
     <section class="portal-column reveal" id="jobs">
