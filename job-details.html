@@ -1,966 +1,743 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="hi">
 <head>
-       <!-- Google Adsense code snippet-->
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4127177035571828"
+  <!-- Google Adsense code snippet-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4127177035571828"
      crossorigin="anonymous"></script>
-    
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-50M8BHNJ46"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-50M8BHNJ46');
-    </script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EduNaukri - Latest government and private jobs, admit cards, results and notifications.">
-    <title>Job Details — EduNaukri</title>
-    <!-- SEO & Social Meta Tags (Dynamic) -->
-    <link rel="canonical" id="canonicalUrl" href="https://edu-nuakri.netlify.app/job-details.html" />
-    
-    <meta property="og:type" content="article">
-    <meta property="og:url" id="ogUrl" content="https://edu-nuakri.netlify.app/job-details.html">
-    <meta property="og:title" id="ogTitle" content="Job Details — EduNaukri">
-    <meta property="og:description" content="Read complete details about this government job update, eligibility, and selection process on EduNaukri.">
-    <meta property="og:image" content="https://edu-nuakri.netlify.app/logo.png">
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" id="twTitle" content="Job Details — EduNaukri">
-    <meta name="twitter:description" content="Read complete details about this government job update, eligibility, and selection process on EduNaukri.">
-    <meta name="twitter:image" content="https://edu-nuakri.netlify.app/logo.png">
-    
-    <!-- Load the official Supabase library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <style>
-        /* =========================================
-       BASE VARIABLES & RESET (PREMIUM SAAS LOOK)
-    ========================================= */
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        
-        :root {
-            --blue: #2563EB;
-            --blue-dark: #1E40AF;
-            --navy: #0F172A;
-            --orange: #F97316;
-            --bg: #F8FAFC;
-            --card: #FFFFFF;
-            --text: #1E293B;
-            --muted: #64748B;
-            --border: #E2E8F0;
-            --shadow-soft: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
-            --shadow-hover: 0 20px 40px -5px rgba(37, 99, 235, 0.1);
-        }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            margin: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text);
-            background: var(--bg);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
-        
-        /* =========================================
-       NAVIGATION (GLASSMORPHISM)
-    ========================================= */
-        .top {
-            background: var(--navy);
-            color: #CBD5E1;
-            padding: 8px 5%;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            font-weight: 500;
-        }
-        
-        .social-links span {
-            color: #fff;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .social-links span:hover {
-            color: var(--orange);
-        }
-        
-        .nav {
-            height: 80px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 26px;
-            color: var(--navy);
-            letter-spacing: -0.5px;
-        }
-        
-        .brand img {
-            width: 44px;
-            height: 44px;
-            object-fit: contain;
-        }
-        
-        .brand span {
-            color: var(--blue);
-        }
-        
-        .menu {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        
-        .menu a {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--muted);
-            padding: 8px 16px;
-            border-radius: 8px;
-        }
-        
-        .menu a:hover,
-        .menu a.active {
-            color: var(--blue);
-            background: #EFF6FF;
-        }
-        
-        .hamburger {
-            display: none;
-            font-size: 26px;
-            background: none;
-            border: none;
-            color: var(--navy);
-            cursor: pointer;
-        }
-        
-        /* =========================================
-       JOB DETAILS CONTAINER
-    ========================================= */
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 0 20px 80px;
-        }
-        
-        .details-container {
-            background: var(--card);
-            padding: 50px 60px;
-            border-radius: 24px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid var(--border);
-            min-height: 50vh;
-            margin-top: 40px;
-        }
-        
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 30px;
-            color: var(--muted);
-            font-weight: 700;
-            font-size: 14px;
-            background: var(--bg);
-            padding: 10px 18px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-        
-        .back-btn:hover {
-            background: var(--navy);
-            color: #fff;
-            border-color: var(--navy);
-            transform: translateX(-4px);
-        }
-        
-        .job-header {
-            border-bottom: 2px dashed var(--border);
-            padding-bottom: 25px;
-            margin-bottom: 35px;
-        }
-        
-        .job-title {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--navy);
-            margin: 0 0 20px 0;
-            line-height: 1.3;
-            letter-spacing: -0.5px;
-        }
-        
-        .job-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        
-        .meta-tag {
-            background: #EFF6FF;
-            color: var(--blue);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid #BFDBFE;
-        }
-        
-        .meta-tag:nth-child(2) {
-            background: #FEF2F2;
-            color: #E11D48;
-            border-color: #FECDD3;
-        }
-        
-        .meta-tag:nth-child(3) {
-            background: #F8FAFC;
-            color: var(--muted);
-            border-color: var(--border);
-        }
-        
-        /* =========================================
-       INJECTED HTML CONTENT STYLING
-    ========================================= */
-        .job-content-wrapper {
-            overflow-x: auto;
-        }
-        
-        .job-content {
-            line-height: 1.8;
-            color: #334155;
-            font-size: 16px;
-        }
-        
-        .job-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            margin: 20px 0;
-            box-shadow: var(--shadow-soft);
-        }
-        
-        .job-content h2,
-        .job-content h3 {
-            color: var(--navy);
-            font-weight: 800;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .job-content h2::after,
-        .job-content h3::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 40%;
-            height: 3px;
-            background: var(--blue);
-            border-radius: 4px;
-        }
-        
-        .job-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            background: var(--card);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            border: 1px solid var(--border);
-        }
-        
-        .job-content th,
-        .job-content td {
-            border: 1px solid var(--border);
-            padding: 16px;
-            text-align: left;
-        }
-        
-        .job-content th {
-            background: #F1F5F9;
-            color: var(--navy);
-            font-weight: 700;
-            font-size: 15px;
-        }
-        
-        .job-content tr:hover td {
-            background: #F8FAFC;
-        }
-        
-        .job-content a {
-            color: var(--blue);
-            font-weight: 600;
-            text-decoration: underline;
-        }
-        
-        .job-content a:hover {
-            color: var(--orange);
-        }
-        
-        .status-msg {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--muted);
-            padding: 60px 0;
-        }
-        
-        /* =========================================
-       RELATED JOBS SECTION
-    ========================================= */
-        .related-jobs {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 2px dashed var(--border);
-        }
-        
-        .related-jobs h3 {
-            color: var(--navy);
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        
-        .related-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-        }
-        
-        .related-card:hover {
-            border-color: #BFDBFE;
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-4px);
-        }
-        
-        .related-tag {
-            font-size: 12px;
-            background: #F1F5F9;
-            color: var(--navy);
-            padding: 6px 10px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        
-        .related-title {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.5;
-            margin: 0 0 20px 0;
-            color: var(--text);
-        }
-        
-        .related-card:hover .related-title {
-            color: var(--blue);
-        }
-        
-        .read-more {
-            font-size: 14px;
-            color: var(--blue);
-            font-weight: 700;
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .read-more::after {
-            content: '→';
-            transition: transform 0.2s;
-        }
-        
-        .related-card:hover .read-more::after {
-            transform: translateX(4px);
-        }
-        
-        /* =========================================
-       FLOATING WHATSAPP BUTTON
-    ========================================= */
-        .floating-wa {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 24px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 15px;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            z-index: 999;
-            text-decoration: none;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-        }
-        
-        .floating-wa:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
-        }
-        
-        .floating-wa svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
-            }
-            
-            70% {
-                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-            }
-            
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-        
-        /* =========================================
-       MOBILE RESPONSIVENESS
-    ========================================= */
-        @media(max-width: 900px) {
-            .hamburger {
-                display: block;
-            }
-            
-            .menu {
-                display: none;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: #fff;
-                flex-direction: column;
-                padding: 20px;
-                margin: 0;
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-                border-top: 1px solid var(--border);
-            }
-            
-            .menu.show-menu {
-                display: flex;
-                animation: fadeInDown 0.2s ease forwards;
-            }
-            
-            .menu a {
-                width: 100%;
-                text-align: center;
-                padding: 14px;
-                background: var(--bg);
-                margin: 4px 0;
-            }
-        }
-        
-        @media(max-width: 768px) {
-            body {
-                background: #fff;
-            }
-            
-            .top {
-                display: none;
-            }
-            
-            .nav {
-                height: 70px;
-            }
-            
-            .brand {
-                font-size: 22px;
-            }
-            
-            .brand img {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .container {
-                padding: 0 !important;
-            }
-            
-            .details-container {
-                padding: 30px 20px;
-                margin-top: 0;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
-                min-height: auto;
-            }
-            
-            .job-title {
-                font-size: 26px;
-            }
-            
-            .job-content table {
-                font-size: 13px;
-            }
-            
-            .job-content th,
-            .job-content td {
-                padding: 10px 8px;
-            }
-            
-            .related-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .floating-wa {
-                bottom: 20px;
-                right: 20px;
-                padding: 12px 18px;
-                font-size: 14px;
-            }
-        }
-        
-        /* =========================================
-           EXPLORE OTHER SECTIONS (PILLS)
-        ========================================= */
-        .explore-sections {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 2px dashed var(--border);
-            text-align: center;
-        }
-        
-        .explore-sections h3 {
-            color: var(--navy);
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 25px;
-        }
-        
-        .explore-pills {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-        }
-        
-        .explore-pill {
-            background: #fff;
-            color: var(--blue);
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 15px;
-            border: 2px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        
-        .explore-pill:hover {
-            background: var(--blue);
-            color: #fff;
-            border-color: var(--blue);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        /* =========================================
-           PREMIUM HOMEPAGE FOOTER
-        ========================================= */
-        .footer {
-            background: var(--navy);
-            color: #CBD5E1;
-            padding: 60px 5% 20px;
-            margin-top: 60px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        .footer-col h4 {
-            color: #fff;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .footer-brand-logo {
-            height: 45px;
-            margin-bottom: 15px;
-            /* Ye filter trick aapke logo ko dark background ke liye white kar dega */
-            filter: brightness(0) invert(1);
-        }
-        
-        .footer-col p {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #CBD5E1;
-            font-size: 15px;
-            transition: 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--orange);
-            padding-left: 8px;
-            /* Hover par thoda aage khiskega (Cool effect) */
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            padding-top: 25px;
-            margin-top: 40px;
-            font-size: 14px;
-        }
-    </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-50M8BHNJ46"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-50M8BHNJ46');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      const pathname = window.location.pathname;
+      const postRouteIndex = pathname.indexOf("/post/");
+      const detailsRoute = pathname.match(/^(.*)\/job-details\.html\/?$/);
+      const basePath = postRouteIndex >= 0
+        ? pathname.slice(0, postRouteIndex)
+        : detailsRoute
+          ? detailsRoute[1]
+          : "";
+      window.EDUNAKRI_BASE_PATH = basePath;
+      const baseElement = document.createElement("base");
+      baseElement.href = (basePath || "") + "/";
+      document.head.append(baseElement);
+    })();
+  </script>
+  <meta name="description" content="Read the complete details of this job, exam or government notice on EduNaukri.">
+  <meta name="theme-color" content="#102d50">
+  <title>Notice details — EduNaukri</title>
+  <link rel="canonical" id="canonicalUrl" href="https://edu-nuakri.netlify.app/job-details.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" id="ogUrl" content="https://edu-nuakri.netlify.app/job-details.html">
+  <meta property="og:title" id="ogTitle" content="Notice details — EduNaukri">
+  <meta property="og:description" content="Read the complete details of this job, exam or government notice on EduNaukri.">
+  <meta property="og:image" content="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="twTitle" content="Notice details — EduNaukri">
+  <meta name="twitter:description" content="Read the complete details of this job, exam or government notice on EduNaukri.">
+  <meta name="twitter:image" content="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root {
+  color-scheme: light;
+  --navy: #102d50;
+  --navy-deep: #0b2340;
+  --blue: #1559a6;
+  --blue-light: #eaf2fb;
+  --gold: #e9a832;
+  --paper: #f2f6fb;
+  --card: #fff;
+  --ink: #18324d;
+  --muted: #667b91;
+  --line: #dce6f0;
+  --green: #20835a;
+  --shadow: 0 9px 30px rgba(18, 54, 92, .075);
+  font-family: "Plus Jakarta Sans", "Noto Sans Devanagari", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { min-height: 100%; scroll-behavior: smooth; scroll-padding-top: 88px; }
+body { min-width: 320px; min-height: 100dvh; margin: 0; background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; }
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 3px solid rgba(233, 168, 50, .8); outline-offset: 3px; }
+[hidden] { display: none !important; }
+
+.topline { min-height: 34px; background: var(--navy); color: #d4e1ef; font-size: 11px; letter-spacing: .015em; }
+.topline-inner { width: min(1180px, calc(100% - 40px)); min-height: 34px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.topline a { color: #f4ca73; font-weight: 700; }
+.topline a:hover { color: white; }
+.site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(220, 230, 240, .9); background: rgba(255, 255, 255, .96); backdrop-filter: blur(14px); }
+.nav-shell { width: min(1180px, calc(100% - 40px)); height: 68px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
+.brand { display: inline-flex; align-items: center; min-width: 128px; }
+.brand img { display: block; width: auto; max-width: 178px; height: 42px; object-fit: contain; }
+.menu { display: flex; align-items: center; gap: 4px; }
+.menu a { padding: 9px 11px; border-radius: 8px; color: #536b84; font-size: 12px; font-weight: 700; transition: color .18s ease, background-color .18s ease; }
+.menu a:hover, .menu a:focus-visible { color: var(--blue); background: #eff5fb; }
+.menu-toggle { display: none; }
+
+.page-shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 24px 0 64px; }
+.breadcrumbs { display: flex; align-items: center; gap: 10px; margin-bottom: 17px; color: #8293a5; font-size: 11px; font-weight: 600; }
+.breadcrumbs a { color: var(--blue); }
+.breadcrumbs a:hover { text-decoration: underline; }
+.content-layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; align-items: start; gap: 22px; }
+.notice-card { min-width: 0; padding: 28px 34px 32px; border: 1px solid var(--line); border-radius: 15px; background: var(--card); box-shadow: var(--shadow); }
+.back-link { display: inline-flex; align-items: center; gap: 8px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 8px; background: #f7f9fc; color: #5c7086; font-size: 11px; font-weight: 700; transition: background-color .18s ease, color .18s ease; }
+.back-link:hover { background: var(--navy); color: white; }
+.notice-header { padding: 26px 0 22px; }
+.eyebrow { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; color: #6e8195; font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.eyebrow-mark { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px #fbf2df; }
+.notice-title { max-width: 850px; margin: 0; color: var(--navy); font-size: clamp(25px, 3.3vw, 37px); font-weight: 800; letter-spacing: -.045em; line-height: 1.24; overflow-wrap: anywhere; }
+.notice-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 19px; }
+.meta-tag { display: inline-flex; align-items: center; min-height: 29px; padding: 6px 10px; border: 1px solid #d7e6f6; border-radius: 6px; background: #eef5fc; color: #1c5a99; font-size: 10px; font-weight: 800; letter-spacing: .02em; }
+.state-tag { border-color: #e6eaf0; background: #f5f7fa; color: #62768a; }
+.date-tag { border-color: #f1e2bf; background: #fff9eb; color: #8e6415; }
+.new-tag { border-color: #d0e9dc; background: #ecf7f0; color: #207649; }
+.author-row { display: flex; align-items: center; gap: 11px; padding: 15px 0; }
+.author-mark { width: 36px; height: 36px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid #cddded; border-radius: 50%; background: #eaf2fb; color: var(--navy); font-size: 11px; font-weight: 800; letter-spacing: .03em; }
+.author-copy { display: grid; gap: 2px; }
+.author-label { color: #8a9aaa; font-size: 9px; font-weight: 700; }
+.author-name { color: var(--navy); font-size: 11px; font-weight: 800; }
+.author-divider { width: 1px; height: 24px; margin: 0 4px; background: var(--line); }
+.author-note { color: #75879a; font-size: 10px; font-weight: 600; }
+.article-rule { height: 1px; margin-bottom: 23px; background: var(--line); }
+.job-content-wrapper { min-width: 0; overflow-x: auto; }
+.job-content { color: #354d64; font-size: 14px; line-height: 1.85; overflow-wrap: anywhere; }
+.job-content > :first-child { margin-top: 0; }
+.job-content > :last-child { margin-bottom: 0; }
+.job-content h1, .job-content h2, .job-content h3, .job-content h4, .job-content h5, .job-content h6 { color: var(--navy); font-weight: 800; line-height: 1.35; margin: 30px 0 12px; }
+.job-content h1 { font-size: 25px; }
+.job-content h2 { font-size: 21px; }
+.job-content h3 { font-size: 17px; }
+.job-content h4, .job-content h5, .job-content h6 { font-size: 15px; }
+.job-content p { margin: 0 0 15px; }
+.job-content a { color: #1559a6; font-weight: 700; text-decoration: underline; text-decoration-color: #a9c7e6; text-underline-offset: 3px; }
+.job-content a:hover { color: #0b3b70; text-decoration-color: currentColor; }
+.job-content ul, .job-content ol { padding-left: 24px; margin: 0 0 18px; }
+.job-content li { padding-left: 3px; margin: 5px 0; }
+.job-content li::marker { color: var(--gold); }
+.job-content blockquote { margin: 20px 0; padding: 13px 17px; border-left: 3px solid var(--gold); background: #fffaf0; color: #5e6570; }
+.job-content hr { height: 1px; margin: 24px 0; border: 0; background: var(--line); }
+.job-content img { display: block; max-width: 100%; height: auto; margin: 19px auto; border: 1px solid var(--line); border-radius: 9px; }
+.job-content table { width: 100%; margin: 20px 0; border: 1px solid var(--line); border-collapse: separate; border-spacing: 0; border-radius: 8px; overflow: hidden; font-size: 12px; }
+.job-content th, .job-content td { min-width: 90px; padding: 10px 12px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.job-content th { background: #edf3f9; color: var(--navy); font-weight: 800; }
+.job-content tr:last-child td { border-bottom: 0; }
+.job-content td:last-child, .job-content th:last-child { border-right: 0; }
+.job-content tr:nth-child(even) td { background: #fafbfd; }
+.job-content pre { max-width: 100%; padding: 14px; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: #f5f7fa; font-size: 12px; }
+.job-content iframe, .job-content video, .job-content audio { max-width: 100%; }
+.related-section { margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--line); }
+.section-heading { display: flex; justify-content: space-between; align-items: end; gap: 15px; margin-bottom: 15px; }
+.section-heading .eyebrow { margin-bottom: 5px; }
+.section-heading h2, .explore-section h2 { margin: 0; color: var(--navy); font-size: 19px; font-weight: 800; letter-spacing: -.03em; }
+.section-heading > a { color: var(--blue); font-size: 10px; font-weight: 800; white-space: nowrap; }
+.section-heading > a:hover { text-decoration: underline; }
+.related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
+.related-card { min-width: 0; min-height: 136px; display: flex; flex-direction: column; align-items: flex-start; padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfe; transition: border-color .18s ease, transform .18s ease, background-color .18s ease; }
+.related-card:hover { transform: translateY(-2px); border-color: #b6cde5; background: #f6f9fd; }
+.related-tag { margin-bottom: 10px; padding: 4px 7px; border-radius: 4px; background: #edf3f9; color: #33658e; font-size: 8px; font-weight: 800; text-transform: uppercase; }
+.related-title { margin: 0; color: #26435f; font-size: 11px; font-weight: 800; line-height: 1.5; }
+.read-more { display: flex; gap: 5px; align-items: center; margin-top: auto; padding-top: 12px; color: var(--blue); font-size: 9px; font-weight: 800; }
+.explore-section { margin-top: 32px; padding-top: 24px; border-top: 1px dashed #d7e2ed; }
+.explore-section .eyebrow { margin-bottom: 5px; }
+.explore-section h2 { font-size: 17px; }
+.explore-links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+.explore-links a { padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: #f7f9fc; color: #42617f; font-size: 9px; font-weight: 700; transition: color .18s ease, background-color .18s ease; }
+.explore-links a:hover { border-color: var(--navy); background: var(--navy); color: white; }
+
+.sidebar { display: grid; gap: 12px; }
+.trust-card { position: relative; overflow: hidden; padding: 19px; border-radius: 11px; background: linear-gradient(145deg, #102d50, #164b7d); color: white; box-shadow: 0 9px 22px rgba(16, 45, 80, .15); }
+.trust-card::after { position: absolute; right: -35px; bottom: -60px; width: 150px; height: 150px; border: 1px solid rgba(255, 255, 255, .12); border-radius: 50%; content: ""; }
+.trust-icon { width: 34px; height: 34px; display: grid; place-items: center; margin-bottom: 20px; border: 1px solid rgba(255,255,255,.22); border-radius: 8px; background: rgba(255,255,255,.08); color: #f4ca73; }
+.trust-icon svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.trust-overline { margin: 0 0 7px; color: #f4ca73; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.trust-card h2 { max-width: 190px; margin: 0 0 8px; font-size: 19px; letter-spacing: -.03em; line-height: 1.27; }
+.trust-card > p:not(.trust-overline) { max-width: 220px; margin: 0; color: #d1dfec; font-size: 10px; line-height: 1.65; }
+.trust-foot { display: flex; align-items: center; gap: 7px; margin-top: 20px; color: #e6edf4; font-size: 9px; font-weight: 700; }
+.trust-dot { width: 6px; height: 6px; border-radius: 50%; background: #e9b74f; }
+.author-card { padding: 15px 16px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.author-card .eyebrow { margin-bottom: 12px; font-size: 9px; }
+.author-card-person { display: flex; align-items: center; gap: 10px; }
+.author-mark.large { width: 39px; height: 39px; }
+.author-card-person strong, .author-card-person span { display: block; }
+.author-card-person strong { color: var(--navy); font-size: 11px; }
+.author-card-person span { margin-top: 3px; color: #8292a2; font-size: 9px; font-weight: 600; }
+.channel-card { display: flex; align-items: center; gap: 10px; padding: 13px; border: 1px solid #cfe5d9; border-radius: 10px; background: #f2faf5; color: #215b42; transition: background-color .18s ease, border-color .18s ease; }
+.channel-card:hover { border-color: #a4d4b9; background: #e8f6ee; }
+.channel-symbol { width: 31px; height: 31px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; background: #20835a; color: white; }
+.channel-symbol svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.channel-symbol svg path + path { fill: currentColor; stroke: none; }
+.channel-card strong, .channel-card small { display: block; }
+.channel-card strong { font-size: 9px; line-height: 1.4; }
+.channel-card small { margin-top: 3px; color: #668875; font-size: 8px; }
+.channel-arrow { margin-left: auto; color: #58826b; font-size: 13px; }
+
+.status-panel { min-height: 310px; padding: 40px 4px; }
+.loading-panel { display: grid; align-content: start; gap: 14px; }
+.skeleton { position: relative; overflow: hidden; border-radius: 6px; background: #edf2f7; }
+.skeleton::after { position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.76), transparent); animation: shimmer 1.4s infinite; content: ""; }
+.eyebrow-skeleton { width: 112px; height: 12px; margin: 5px 0; }
+.title-skeleton { width: 83%; height: 28px; }
+.title-skeleton.short { width: 58%; }
+.meta-skeleton { width: 56%; height: 27px; margin-top: 5px; }
+.copy-skeleton { width: 100%; height: 11px; margin-top: 9px; }
+.copy-skeleton.narrow { width: 72%; }
+.error-panel { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.status-kicker { color: #a33b3b; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.error-panel h1 { margin: 9px 0; color: var(--navy); font-size: 23px; letter-spacing: -.035em; }
+.error-panel p { max-width: 430px; margin: 0 0 18px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.retry-button { min-height: 37px; padding: 0 14px; border: 0; border-radius: 7px; background: var(--blue); color: white; cursor: pointer; font-size: 11px; font-weight: 800; transition: background-color .18s ease; }
+.retry-button:hover { background: var(--navy); }
+.home-link { margin-top: 12px; color: var(--blue); font-size: 10px; font-weight: 800; }
+.home-link:hover { text-decoration: underline; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@keyframes shimmer { to { transform: translateX(100%); } }
+
+.site-footer { border-top: 1px solid var(--line); background: #fff; }
+.footer-inner { width: min(1180px, calc(100% - 40px)); min-height: 118px; margin: auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px 24px; padding: 22px 0; }
+.footer-brand img { display: block; width: auto; height: 33px; }
+.footer-inner > p { margin: 0; color: #75879a; font-size: 10px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 14px; }
+.footer-links a { color: #61778d; font-size: 9px; font-weight: 700; }
+.footer-links a:hover { color: var(--blue); }
+.copyright { grid-column: 1 / -1; padding-top: 11px; border-top: 1px solid #edf1f5; color: #8a99a8; font-size: 9px; text-align: center; }
+.floating-wa { position: fixed; right: 20px; bottom: 20px; z-index: 15; display: inline-flex; align-items: center; gap: 8px; padding: 11px 15px; border: 1px solid rgba(255,255,255,.35); border-radius: 50px; background: #20835a; box-shadow: 0 8px 20px rgba(32, 131, 90, .22); color: white; font-size: 10px; font-weight: 800; transition: transform .18s ease, background-color .18s ease; }
+.floating-wa:hover { transform: translateY(-2px); background: #176c49; }
+.floating-wa svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.floating-wa svg path + path { fill: currentColor; stroke: none; }
+
+@media (max-width: 900px) {
+  .content-layout { grid-template-columns: minmax(0, 1fr) 230px; gap: 15px; }
+  .notice-card { padding: 25px 25px 28px; }
+  .nav-shell { height: 64px; }
+  .menu { gap: 0; }
+  .menu a { padding-inline: 8px; font-size: 11px; }
+  .related-grid { grid-template-columns: 1fr; }
+  .related-card { min-height: 105px; }
+}
+@media (max-width: 700px) {
+  .topline-inner, .nav-shell, .page-shell, .footer-inner { width: min(100% - 28px, 560px); }
+  .topline-inner { min-height: 32px; font-size: 9px; }
+  .nav-shell { height: 60px; }
+  .brand img { height: 37px; max-width: 150px; }
+  .menu-toggle { width: 40px; height: 40px; display: grid; align-content: center; justify-items: center; gap: 5px; border: 1px solid var(--line); border-radius: 8px; background: white; cursor: pointer; }
+  .menu-toggle span { width: 17px; height: 2px; border-radius: 2px; background: var(--navy); transition: transform .18s ease, opacity .18s ease; }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-7px) rotate(-45deg); }
+  .menu { position: absolute; top: calc(100% + 1px); right: 0; left: 0; display: none; flex-direction: column; align-items: stretch; gap: 4px; padding: 10px 14px 15px; border-bottom: 1px solid var(--line); background: white; box-shadow: 0 14px 20px rgba(18,54,92,.1); }
+  .menu.is-open { display: flex; }
+  .menu a { padding: 11px 12px; border-radius: 7px; font-size: 12px; }
+  .page-shell { padding-top: 17px; padding-bottom: 40px; }
+  .breadcrumbs { margin-bottom: 12px; font-size: 10px; }
+  .content-layout { grid-template-columns: 1fr; gap: 13px; }
+  .notice-card { padding: 19px 17px 23px; border-radius: 11px; }
+  .notice-header { padding: 22px 0 18px; }
+  .notice-title { font-size: clamp(24px, 7vw, 33px); }
+  .notice-meta { gap: 6px; margin-top: 15px; }
+  .meta-tag { min-height: 26px; padding: 5px 8px; font-size: 9px; }
+  .author-row { gap: 9px; }
+  .author-divider { margin-inline: 1px; }
+  .author-note { font-size: 9px; }
+  .job-content { font-size: 13px; line-height: 1.78; }
+  .job-content h2 { font-size: 19px; }
+  .job-content h3 { font-size: 16px; }
+  .job-content table { font-size: 11px; }
+  .job-content th, .job-content td { min-width: 78px; padding: 8px; }
+  .related-grid { grid-template-columns: 1fr; }
+  .related-card { min-height: 98px; }
+  .explore-links { gap: 6px; }
+  .sidebar { grid-template-columns: 1fr 1fr; }
+  .trust-card { grid-row: span 2; }
+  .trust-card h2 { font-size: 17px; }
+  .channel-card { align-items: flex-start; flex-wrap: wrap; }
+  .channel-card > span:nth-child(2) { flex: 1 1 calc(100% - 45px); }
+  .channel-arrow { display: none; }
+  .footer-inner { grid-template-columns: 1fr; justify-items: center; gap: 12px; text-align: center; }
+  .footer-links { justify-content: center; }
+  .copyright { width: 100%; }
+  .floating-wa { right: 12px; bottom: 12px; padding: 10px 12px; }
+}
+@media (max-width: 390px) {
+  .topline-inner { width: calc(100% - 20px); }
+  .topline-inner > span { max-width: 52%; }
+  .topline-inner a { text-align: right; }
+  .sidebar { grid-template-columns: 1fr; }
+  .trust-card { grid-row: auto; }
+  .author-divider { display: none; }
+  .author-note { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 <body>
-    
-    <nav class="nav">
-        <a class="navbar-brand" href="index.html">
-            <img src="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" alt="Edu Naukri Logo" style="height: 40px; width: auto; object-fit: contain;">
-        </a>
-        <button class="hamburger" id="hamburgerMenu">☰</button>
-        <div class="menu" id="navMenu">
-            <a href="index.html">Home</a>
-            <a href="index.html#jobs">Latest Jobs</a>
-            <a href="index.html#admit-cards">Admit Card</a>
-            <a href="index.html#results">Results</a>
-            <a href="index.html#others">Others</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
-        </div>
-    </nav>
-    
-    <main class="container">
-        <div class="details-container">
-            <a href="index.html" class="back-btn">← Back to Home</a>
-            
-            <div id="loading" class="status-msg">Loading ...</div>
-            <div id="errorMsg" class="status-msg" style="display: none; color: #E11D48;"></div>
-            
-            <div id="postContainer" style="display: none;">
-                <div class="job-header">
-                    <h1 class="job-title" id="displayTitle"></h1>
-                    <div class="job-meta">
-                        <span class="meta-tag" id="displayCategory"></span>
-                        <span class="meta-tag" id="displayState"></span>
-                        <span class="meta-tag" id="displayDate"></span>
-                    </div>
-                </div>
-                
-                <div class="job-content-wrapper">
-                    <div class="job-content" id="displayContent"></div>
-                </div>
-                
-                <div class="related-jobs" id="relatedJobsSection" style="display: none;">
-                    <h3>🔥 You May Also Like</h3>
-                    <div class="related-grid" id="relatedGrid">
-                        <!-- Cards injected by JS -->
-                    </div>
-                </div>
-            </div>
-            <!-- YAHAN AAPKA RELATED JOBS WALA SECTION HAI -->
-            <div class="related-jobs" id="relatedJobsSection" style="display: none;">
-                <!-- ... -->
-            </div>
-            
-            <!-- 1. ADD THIS: EXPLORE OTHER SECTIONS -->
-            <div class="explore-sections">
-                <h3>Explore More Sections</h3>
-                <div class="explore-pills">
-                    <a href="latest-jobs.html" class="explore-pill">Latest Jobs</a>
-                    <a href="admit-cards.html" class="explore-pill">Admit Cards</a>
-                    <a href="results.html" class="explore-pill">Results</a>
-                    <a href="sarkari-yojana.html" class="explore-pill">Sarkari Yojana</a>
-                    <a href="admission.html" class="explore-pill">Admission</a>
-                    <a href="others.html" class="explore-pill">Answer Keys & More</a>
-                </div>
-            </div>
-            
-        </div> <!-- Ye postContainer ka closing div hai -->
-        </div> <!-- Ye details-container ka closing div hai -->
-    </main>
-    
-    <!-- 2. ADD THIS: HOMEPAGE FOOTER -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <img src="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" alt="EduNaukri Logo" class="footer-brand-logo">
-                <p>EduNaukri is India's most trusted premium job portal. Get lightning-fast updates for all government jobs, private jobs, results, and admit cards.</p>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="latest-jobs.html">Latest Jobs</a></li>
-                    <li><a href="admit-cards.html">Admit Cards</a></li>
-                    <li><a href="results.html">Results</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Legal & Support</h4>
-                <ul class="footer-links">
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="disclaimer.html">Disclaimer</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 EduNaukri.in. All rights reserved.
-        </div>
-    </footer>
-    
-    <!-- Yahan apka Floating WhatsApp button aur baki scripts aayengi -->
-    
+  <div class="topline">
+    <div class="topline-inner">
+      <span>Clear updates for your next step</span>
+      <a href="https://whatsapp.com/channel/0029Vb9twqbATRSlpEITZ41X" target="_blank" rel="noopener noreferrer">Follow the WhatsApp channel <span aria-hidden="true">↗</span></a>
     </div>
-    </main>
-    
-    <a href="https://whatsapp.com/channel/0029Vb9twqbATRSlpEITZ41X" class="floating-wa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
-        Join WhatsApp Group
-    </a>
-    
-    <script>
-        const SUPABASE_URL = 'https://coeemddusgoafawggwsl.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        // --- NAYA LOGIC: URL se ID ya Slug dono pakadna ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('id');
-        
-        const pathParts = window.location.pathname.split('/');
-        let slug = null;
-        if (pathParts.length >= 3 && pathParts[1] === 'post') {
-            slug = pathParts[2];
-        }
-        
-        async function fetchPostDetails() {
-            const loading = document.getElementById('loading');
-            const errorMsg = document.getElementById('errorMsg');
-            const postContainer = document.getElementById('postContainer');
-            
-            // Error check update kiya gaya: Agar dono me se kuch bhi na ho tabhi error do
-            if (!postId && !slug) {
-                loading.style.display = 'none';
-                errorMsg.innerText = "Error: No job ID or Slug provided.";
-                errorMsg.style.display = 'block';
-                return;
-            }
-            
-            try {
-                let query = supabaseClient.from('jobs').select('*');
-                
-                if (slug) {
-                    query = query.eq('slug', slug);
-                } else if (postId) {
-                    query = query.eq('id', postId);
-                }
-                
-                const { data, error } = await query.single();
-                
-                if (error) throw error;
-                
-                const postTitle = `${data.title} — EduNaukri`;
-                const currentUrl = window.location.href;
-                
-                document.title = postTitle;
-                document.getElementById('canonicalUrl').href = currentUrl;
-                document.getElementById('ogUrl').content = currentUrl;
-                document.getElementById('ogTitle').content = postTitle;
-                document.getElementById('twTitle').content = postTitle;
-                
-                const schemaData = {
-                    "@context": "https://schema.org",
-                    "@type": "Article",
-                    "mainEntityOfPage": {
-                        "@type": "WebPage",
-                        "@id": currentUrl
-                    },
-                    "headline": postTitle,
-                    "image": "https://edu-nuakri.netlify.app/logo.png",
-                    "author": { "@type": "Organization", "name": "EduNaukri" },
-                    "publisher": {
-                        "@type": "Organization",
-                        "name": "EduNaukri",
-                        "logo": { "@type": "ImageObject", "url": "https://edu-nuakri.netlify.app/logo.png" }
-                    },
-                    "datePublished": data.created_at || new Date().toISOString()
-                };
-                
-                const schemaScript = document.createElement('script');
-                schemaScript.type = "application/ld+json";
-                schemaScript.text = JSON.stringify(schemaData);
-                document.head.appendChild(schemaScript);
-                
-                document.getElementById('displayTitle').innerText = data.title;
-                
-                let readableCategory = data.category.replace('-', ' ').toUpperCase();
-                if (data.category === 'answer-keys') readableCategory = 'OTHERS';
-                if (data.category === 'syllabus') readableCategory = 'SARKARI YOJANA';
-                
-                document.getElementById('displayCategory').innerText = `📂 ${readableCategory}`;
-                document.getElementById('displayState').innerText = `📍 ${data.state.toUpperCase()}`;
-                
-                const dateStr = new Date(data.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
-                document.getElementById('displayDate').innerText = `📅 ${dateStr}`;
-                
-                document.getElementById('displayContent').innerHTML = data.content_html;
-                
-                loading.style.display = 'none';
-                postContainer.style.display = 'block';
-                
-                fetchRelatedJobs(data.id, data.category); // Changed from postId to data.id to avoid null issues
-                
-            } catch (error) {
-                console.error("Error fetching post details:", error);
-                loading.style.display = 'none';
-                errorMsg.innerText = "Error: Post not found or has been removed.";
-                errorMsg.style.display = 'block';
-            }
-        }
-        
-        async function fetchRelatedJobs(currentPostId, currentCategory) {
-            try {
-                // select query me 'slug' add kar diya
-                const { data, error } = await supabaseClient
-                    .from('jobs')
-                    .select('id, title, category, slug')
-                    .neq('id', currentPostId)
-                    .order('created_at', { ascending: false })
-                    .limit(3);
-                
-                if (error) throw error;
-                
-                if (data && data.length > 0) {
-                    const relatedGrid = document.getElementById('relatedGrid');
-                    relatedGrid.innerHTML = data.map(job => {
-                        let cardCat = job.category.toUpperCase().replace('-', ' ');
-                        if (job.category === 'answer-keys') cardCat = 'OTHERS';
-                        if (job.category === 'syllabus') cardCat = 'SARKARI YOJANA';
-                        
-                        // Naya Logic: Related jobs bhi clean link par jaayengi
-                        const postLink = job.slug ? `/post/${job.slug}` : `job-details.html?id=${job.id}`;
-                        
-                        return `
-                    <a href="${postLink}" class="related-card">
-                        <span class="related-tag">${cardCat}</span>
-                        <h4 class="related-title">${job.title}</h4>
-                        <div class="read-more">View Details</div>
-                    </a>
-                `
-                    }).join('');
-                    
-                    document.getElementById('relatedJobsSection').style.display = 'block';
-                }
-            } catch (error) {
-                console.error("Error fetching related jobs:", error);
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', fetchPostDetails);
-        
-        // --- Mobile Hamburger Menu Logic ---
-        const hamburger = document.getElementById('hamburgerMenu');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (hamburger && navMenu) {
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('show-menu');
-                if (navMenu.classList.contains('show-menu')) {
-                    hamburger.innerHTML = '✕';
-                    hamburger.style.transform = 'rotate(90deg)';
-                } else {
-                    hamburger.innerHTML = '☰';
-                    hamburger.style.transform = 'rotate(0deg)';
-                }
-            });
-            
-            document.querySelectorAll('.menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('show-menu');
-                    hamburger.innerHTML = '☰';
-                    hamburger.style.transform = 'rotate(0deg)';
-                });
-            });
-        }
-    </script>
-</body>
+  </div>
 
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="EduNaukri home">
+        <img src="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" alt="EduNaukri">
+      </a>
+      <button class="menu-toggle" id="hamburgerMenu" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="menu" id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="index.html#jobs">Latest Jobs</a>
+        <a href="index.html#admit-cards">Admit Card</a>
+        <a href="index.html#results">Results</a>
+        <a href="index.html#others">Others</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Notice details</span>
+    </nav>
+
+    <div class="content-layout">
+      <article class="notice-card" aria-labelledby="displayTitle">
+        <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to all updates</a>
+
+        <section id="loading" class="status-panel loading-panel" aria-live="polite" aria-busy="true">
+          <div class="skeleton eyebrow-skeleton"></div>
+          <div class="skeleton title-skeleton"></div>
+          <div class="skeleton title-skeleton short"></div>
+          <div class="skeleton meta-skeleton"></div>
+          <div class="skeleton copy-skeleton"></div>
+          <div class="skeleton copy-skeleton"></div>
+          <div class="skeleton copy-skeleton narrow"></div>
+          <span class="visually-hidden">Loading notice details</span>
+        </section>
+
+        <section id="errorMsg" class="status-panel error-panel" role="alert" hidden>
+          <span class="status-kicker" id="errorKicker">Unable to load notice</span>
+          <h1 id="errorTitle">We could not find this update.</h1>
+          <p id="errorDescription">The link may be incorrect, or the notice may have been removed.</p>
+          <button class="retry-button" id="retryButton" type="button">Try again</button>
+          <a class="home-link" href="index.html">Return to EduNaukri</a>
+        </section>
+
+        <div id="postContainer" hidden>
+          <header class="notice-header">
+            <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Official update</p>
+            <h1 class="notice-title" id="displayTitle"></h1>
+            <div class="notice-meta" aria-label="Notice information">
+              <span class="meta-tag category-tag" id="displayCategory"></span>
+              <span class="meta-tag state-tag" id="displayState"></span>
+              <span class="meta-tag date-tag" id="displayDate"></span>
+              <span class="meta-tag new-tag" id="displayNew" hidden>New update</span>
+            </div>
+          </header>
+
+          <div class="author-row">
+            <div class="author-mark" aria-hidden="true">DL</div>
+            <div class="author-copy">
+              <span class="author-label">Written by</span>
+              <span class="author-name">Deepak Livariya</span>
+            </div>
+            <span class="author-divider" aria-hidden="true"></span>
+            <span class="author-note">EduNaukri notice desk</span>
+          </div>
+
+          <div class="article-rule"></div>
+          <div class="job-content-wrapper">
+            <div class="job-content" id="displayContent"></div>
+          </div>
+
+          <section class="related-section" id="relatedJobsSection" aria-labelledby="relatedHeading" hidden>
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Keep exploring</p>
+                <h2 id="relatedHeading">More recent updates</h2>
+              </div>
+              <a href="index.html#latest-updates">All updates <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="related-grid" id="relatedGrid"></div>
+          </section>
+        </div>
+
+        <section class="explore-section" aria-labelledby="exploreHeading">
+          <p class="eyebrow">Find your next update</p>
+          <h2 id="exploreHeading">Explore by section</h2>
+          <div class="explore-links">
+            <a href="latest-jobs.html">Latest Jobs</a>
+            <a href="admit-cards.html">Admit Cards</a>
+            <a href="results.html">Results</a>
+            <a href="sarkari-yojana.html">Government Schemes</a>
+            <a href="admission.html">Admissions</a>
+            <a href="answer-keys.html">Others</a>
+          </div>
+        </section>
+      </article>
+
+      <aside class="sidebar" aria-label="About the notice">
+        <div class="trust-card">
+          <span class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M12 3 4.5 6v5.2c0 4.6 3.2 8.8 7.5 9.8 4.3-1 7.5-5.2 7.5-9.8V6L12 3Z"/><path d="m8.7 12 2.1 2.1 4.6-4.7"/></svg>
+          </span>
+          <p class="trust-overline">Read with confidence</p>
+          <h2>Details, clearly laid out.</h2>
+          <p>Review the notice carefully and use the official links included in its details when applying.</p>
+          <div class="trust-foot"><span class="trust-dot"></span> EduNaukri update</div>
+        </div>
+        <div class="author-card">
+          <p class="eyebrow">Page author</p>
+          <div class="author-card-person">
+            <div class="author-mark large" aria-hidden="true">DL</div>
+            <div><strong>Deepak Livariya</strong><span>EduNaukri</span></div>
+          </div>
+        </div>
+        <a class="channel-card" href="https://whatsapp.com/channel/0029Vb9twqbATRSlpEITZ41X" target="_blank" rel="noopener noreferrer">
+          <span class="channel-symbol" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L4 20l.9-4a8.4 8.4 0 1 1 15.6-4.3Z"/><path d="M8.5 8.1c.2-.4.4-.4.7-.4h.4c.2 0 .3.1.4.4l.6 1.4c.1.2.1.4 0 .5l-.5.6c-.2.2-.2.3-.1.5.5.9 1.2 1.6 2.1 2 .2.1.4.1.5-.1l.6-.7c.2-.2.3-.2.6-.1l1.3.6c.3.1.4.2.4.4 0 .3-.2 1.1-.7 1.4-.5.4-1.1.5-1.8.3-.5-.1-1.2-.4-2.1-.9a8.5 8.5 0 0 1-2.9-2.8c-.8-1.2-1-2.1-.9-2.6.1-.3.3-.5.5-.5Z"/></svg>
+          </span>
+          <span><strong>Follow the WhatsApp channel</strong><small>Get new notices as they arrive</small></span>
+          <span class="channel-arrow" aria-hidden="true">↗</span>
+        </a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="footer-brand" href="index.html"><img src="https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" alt="EduNaukri"></a>
+      <p>Government jobs, exam notices and career updates — all in one place.</p>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <span class="copyright">© 2026 EduNaukri. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <a class="floating-wa" href="https://whatsapp.com/channel/0029Vb9twqbATRSlpEITZ41X" target="_blank" rel="noopener noreferrer" aria-label="Join the EduNaukri WhatsApp channel">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L4 20l.9-4a8.4 8.4 0 1 1 15.6-4.3Z"/><path d="M8.5 8.1c.2-.4.4-.4.7-.4h.4c.2 0 .3.1.4.4l.6 1.4c.1.2.1.4 0 .5l-.5.6c-.2.2-.2.3-.1.5.5.9 1.2 1.6 2.1 2 .2.1.4.1.5-.1l.6-.7c.2-.2.3-.2.6-.1l1.3.6c.3.1.4.2.4.4 0 .3-.2 1.1-.7 1.4-.5.4-1.1.5-1.8.3-.5-.1-1.2-.4-2.1-.9a8.5 8.5 0 0 1-2.9-2.8c-.8-1.2-1-2.1-.9-2.6.1-.3.3-.5.5-.5Z"/></svg>
+    <span>WhatsApp updates</span>
+  </a>
+  <script>
+(() => {
+  "use strict";
+
+  const SUPABASE_URL = "https://coeemddusgoafawggwsl.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_5k4N3lBwJ8QOS7sv1y11IA_uaqWCdt1";
+  const CATEGORY_LABELS = {
+    jobs: "Job Notification",
+    "admit-cards": "Admit Card",
+    results: "Result",
+    "answer-keys": "Others",
+    admission: "Admission",
+    syllabus: "Sarkari Yojana"
+  };
+  const ALLOWED_TAGS = new Set([
+    "A", "ABBR", "B", "BLOCKQUOTE", "BR", "CAPTION", "CODE", "DD", "DEL", "DIV", "DL",
+    "DT", "EM", "FIGCAPTION", "FIGURE", "H1", "H2", "H3", "H4", "H5", "H6", "HR",
+    "I", "IMG", "INS", "LI", "OL", "P", "PRE", "S", "SMALL", "SPAN", "STRONG", "SUB",
+    "SUP", "TABLE", "TBODY", "TD", "TFOOT", "TH", "THEAD", "TR", "U", "UL"
+  ]);
+  const DROP_TAGS = new Set(["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "FORM", "INPUT", "BUTTON", "TEXTAREA", "SELECT", "OPTION", "SVG", "MATH", "NOSCRIPT", "TEMPLATE"]);
+  const ATTRS_BY_TAG = {
+    A: new Set(["href", "title"]),
+    IMG: new Set(["src", "alt", "title", "width", "height"]),
+    TD: new Set(["colspan", "rowspan"]),
+    TH: new Set(["colspan", "rowspan", "scope"]),
+    OL: new Set(["start", "type"]),
+    LI: new Set(["value"])
+  };
+
+  const dom = {
+    loading: document.getElementById("loading"),
+    error: document.getElementById("errorMsg"),
+    errorKicker: document.getElementById("errorKicker"),
+    errorTitle: document.getElementById("errorTitle"),
+    errorDescription: document.getElementById("errorDescription"),
+    retry: document.getElementById("retryButton"),
+    post: document.getElementById("postContainer"),
+    title: document.getElementById("displayTitle"),
+    category: document.getElementById("displayCategory"),
+    state: document.getElementById("displayState"),
+    date: document.getElementById("displayDate"),
+    isNew: document.getElementById("displayNew"),
+    content: document.getElementById("displayContent"),
+    relatedSection: document.getElementById("relatedJobsSection"),
+    relatedGrid: document.getElementById("relatedGrid"),
+    menuButton: document.getElementById("hamburgerMenu"),
+    menu: document.getElementById("navMenu")
+  };
+
+  let supabaseClient = null;
+  const queryParams = new URLSearchParams(window.location.search);
+  const postId = queryParams.get("id");
+  const basePath = window.EDUNAKRI_BASE_PATH || "";
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  const postRouteIndex = pathParts.lastIndexOf("post");
+  const rawPathSlug = postRouteIndex >= 0 ? pathParts[postRouteIndex + 1] : null;
+  const pathSlug = rawPathSlug ? decodeURIComponent(rawPathSlug) : null;
+  const slug = queryParams.get("slug") || pathSlug;
+
+  function getDetailUrl(item) {
+    const detailsPath = basePath + "/job-details.html";
+    return item.slug
+      ? detailsPath + "?slug=" + encodeURIComponent(item.slug)
+      : detailsPath + "?id=" + encodeURIComponent(item.id);
+  }
+
+  function categoryLabel(category) {
+    if (CATEGORY_LABELS[category]) return CATEGORY_LABELS[category];
+    return String(category || "Update").replace(/-/g, " ").replace(/\b\w/g, character => character.toUpperCase());
+  }
+
+  function safeUrl(value, image = false) {
+    if (!value) return null;
+    try {
+      const parsed = new URL(value, window.location.href);
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+      if (image && parsed.protocol === "http:" && window.location.protocol === "https:") return null;
+      return parsed.href;
+    } catch {
+      return null;
+    }
+  }
+
+  function cleanRichHtml(html) {
+    const source = new DOMParser().parseFromString(String(html || ""), "text/html");
+    const cleanNode = node => {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === Node.COMMENT_NODE) {
+          child.remove();
+          return;
+        }
+        if (child.nodeType !== Node.ELEMENT_NODE) return;
+        if (DROP_TAGS.has(child.tagName)) {
+          child.remove();
+          return;
+        }
+        cleanNode(child);
+        if (!ALLOWED_TAGS.has(child.tagName)) {
+          child.replaceWith(...child.childNodes);
+          return;
+        }
+        [...child.attributes].forEach(attribute => {
+          const name = attribute.name.toLowerCase();
+          const allowed = ATTRS_BY_TAG[child.tagName]?.has(name) || name === "colgroup";
+          if (!allowed) {
+            child.removeAttribute(attribute.name);
+            return;
+          }
+          if (name === "href" || name === "src") {
+            const url = safeUrl(attribute.value, name === "src" && child.tagName === "IMG");
+            if (url) child.setAttribute(name, url);
+            else child.removeAttribute(attribute.name);
+          }
+        });
+        if (child.tagName === "A" && child.hasAttribute("href")) {
+          child.setAttribute("target", "_blank");
+          child.setAttribute("rel", "noopener noreferrer");
+        }
+        if (child.tagName === "IMG") {
+          child.setAttribute("loading", "lazy");
+          child.setAttribute("decoding", "async");
+          if (!child.hasAttribute("alt")) child.setAttribute("alt", "");
+        }
+      });
+    };
+    cleanNode(source.body);
+    return source.body.innerHTML;
+  }
+
+  function setLoading(isLoading) {
+    dom.loading.hidden = !isLoading;
+    dom.loading.setAttribute("aria-busy", String(isLoading));
+    if (isLoading) {
+      dom.error.hidden = true;
+      dom.post.hidden = true;
+    }
+  }
+
+  function showError(kind, message) {
+    setLoading(false);
+    dom.post.hidden = true;
+    dom.error.hidden = false;
+    const isNotFound = kind === "not-found";
+    dom.errorKicker.textContent = isNotFound ? "Notice not found" : "Unable to load notice";
+    dom.errorTitle.textContent = isNotFound ? "This update is no longer available." : "We could not load this update.";
+    dom.errorDescription.textContent = message || (isNotFound
+      ? "The link may be incorrect, or the notice may have been removed."
+      : "Please check your connection and try loading the notice again.");
+    dom.retry.hidden = !postId && !slug;
+  }
+
+  function displayDate(value) {
+    const date = new Date(value);
+    if (!value || Number.isNaN(date.getTime())) return "Date not listed";
+    return date.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+  }
+
+  function updateMetadata(record) {
+    const pageTitle = `${record.title || "Notice details"} — EduNaukri`;
+    const currentUrl = window.location.href;
+    document.title = pageTitle;
+    document.getElementById("canonicalUrl").href = currentUrl;
+    document.getElementById("ogUrl").content = currentUrl;
+    document.getElementById("ogTitle").content = pageTitle;
+    document.getElementById("twTitle").content = pageTitle;
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      mainEntityOfPage: { "@type": "WebPage", "@id": currentUrl },
+      headline: String(record.title || "EduNaukri notice"),
+      image: "https://ik.imagekit.io/xvdef/IMG_20260913_073510.png",
+      author: { "@type": "Person", name: "Deepak Livariya" },
+      publisher: {
+        "@type": "Organization",
+        name: "EduNaukri",
+        logo: { "@type": "ImageObject", url: "https://ik.imagekit.io/xvdef/IMG_20260913_073510.png" }
+      }
+    };
+    if (record.created_at && !Number.isNaN(new Date(record.created_at).getTime())) {
+      structuredData.datePublished = new Date(record.created_at).toISOString();
+    }
+    const schema = document.createElement("script");
+    schema.type = "application/ld+json";
+    schema.textContent = JSON.stringify(structuredData);
+    document.head.append(schema);
+  }
+
+  function renderPost(record) {
+    dom.title.textContent = record.title || "Untitled notification";
+    dom.category.textContent = categoryLabel(record.category);
+    dom.state.textContent = record.state ? String(record.state).replace(/-/g, " ").toUpperCase() : "All India";
+    dom.date.textContent = displayDate(record.created_at);
+    dom.isNew.hidden = !record.is_new;
+    dom.content.innerHTML = cleanRichHtml(record.content_html);
+    updateMetadata(record);
+    setLoading(false);
+    dom.error.hidden = true;
+    dom.post.hidden = false;
+    fetchRelatedJobs(record.id);
+  }
+
+  async function fetchRelatedJobs(currentPostId) {
+    dom.relatedSection.hidden = true;
+    dom.relatedGrid.replaceChildren();
+    try {
+      const { data, error } = await supabaseClient
+        .from("jobs")
+        .select("id, title, category, slug")
+        .neq("id", currentPostId)
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (error) throw error;
+      if (!data?.length) return;
+
+      const cards = data.map(job => {
+        const card = document.createElement("a");
+        card.className = "related-card";
+        card.href = getDetailUrl(job);
+        const category = document.createElement("span");
+        category.className = "related-tag";
+        category.textContent = categoryLabel(job.category);
+        const title = document.createElement("h3");
+        title.className = "related-title";
+        title.textContent = job.title || "Untitled notification";
+        const more = document.createElement("span");
+        more.className = "read-more";
+        more.textContent = "View details";
+        more.setAttribute("aria-hidden", "true");
+        card.append(category, title, more);
+        card.setAttribute("aria-label", `${title.textContent} — ${category.textContent}`);
+        return card;
+      });
+      dom.relatedGrid.append(...cards);
+      dom.relatedSection.hidden = false;
+    } catch (error) {
+      console.error("Could not load related notices:", error);
+    }
+  }
+
+  async function fetchPostDetails() {
+    setLoading(true);
+    if (!postId && !slug) {
+      showError("not-found", "This link does not include a notice ID or slug. Return to the homepage to browse current updates.");
+      return;
+    }
+    if (!window.supabase?.createClient) {
+      showError("error", "The notice service could not be reached. Please try again in a moment.");
+      return;
+    }
+
+    try {
+      if (!supabaseClient) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      let query = supabaseClient.from("jobs").select("*");
+      query = slug ? query.eq("slug", slug) : query.eq("id", postId);
+      const { data, error } = await query.maybeSingle();
+      if (error) throw error;
+      if (!data) {
+        showError("not-found");
+        return;
+      }
+      renderPost(data);
+    } catch (error) {
+      console.error("Error fetching notice details:", error);
+      const notFound = error?.code === "PGRST116" || /not found|0 rows/i.test(error?.message || "");
+      showError(notFound ? "not-found" : "error");
+    }
+  }
+
+  if (dom.menuButton && dom.menu) {
+    const closeMenu = () => {
+      dom.menu.classList.remove("is-open");
+      dom.menuButton.setAttribute("aria-expanded", "false");
+      dom.menuButton.setAttribute("aria-label", "Open navigation menu");
+    };
+    dom.menuButton.addEventListener("click", () => {
+      const isOpen = dom.menuButton.getAttribute("aria-expanded") !== "true";
+      dom.menu.classList.toggle("is-open", isOpen);
+      dom.menuButton.setAttribute("aria-expanded", String(isOpen));
+      dom.menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+    });
+    dom.menu.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeMenu();
+        dom.menuButton.focus();
+      }
+    });
+    document.addEventListener("click", event => {
+      if (!dom.menu.contains(event.target) && !dom.menuButton.contains(event.target)) closeMenu();
+    });
+  }
+
+  dom.retry.addEventListener("click", fetchPostDetails);
+  fetchPostDetails();
+})();
+
+  </script>
+</body>
 </html>
