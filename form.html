@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Requirement Form</title>
+    <style>
+        /* =========================================
+           PREMIUM UI CSS (Matches EduNaukri Theme)
+        ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F8FAFC;
+            color: #1E293B;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
+            border: 1px solid #E2E8F0;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            color: #0F172A;
+            margin: 0 0 10px;
+            font-weight: 800;
+            font-size: 24px;
+        }
+
+        .form-header p {
+            color: #64748B;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #1E293B;
+        }
+
+        input[type="text"], input[type="tel"], select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            background-color: #F8FAFC;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            color: #0F172A;
+        }
+
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2563EB;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Radio & Checkbox Styling */
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #475569;
+            cursor: pointer;
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            background: #F8FAFC;
+            transition: 0.2s;
+        }
+
+        .option-label:hover {
+            border-color: #94A3B8;
+            background: #F1F5F9;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #2563EB;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Client Requirement Form</h2>
+            <p>Please fill out your website requirements below.</p>
+        </div>
+
+        <!-- FormSubmit Setup: Pointing to your email -->
+        <form action="https://formsubmit.co/dream100wala@gmail.com" method="POST" id="clientForm">
+            
+            <!-- FormSubmit Extra Features -->
+            <input type="hidden" name="_subject" value="New Client Website Requirement! 🚀">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table"> <!-- Sends email in a clean table format -->
+
+            <div class="form-group">
+                <label>Aapka Poora Naam *</label>
+                <input type="text" name="Client_Name" placeholder="e.g. Rahul Kumar" required>
+            </div>
+
+            <div class="form-group">
+                <label>WhatsApp Number *</label>
+                <input type="tel" name="WhatsApp_Number" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+
+            <div class="form-group">
+                <label>Website ka naam kya rakhna chahte hain? *</label>
+                <input type="text" name="Website_Name" placeholder="e.g. MyJobPortal" required>
+            </div>
+
+            <div class="form-group">
+                <label>Domain (.in / .com) Status *</label>
+                <div class="option-group">
+                    <label class="option-label">
+                        <input type="radio" name="Domain_Status" value="Already Owned" required> Haan, mere paas domain hai.
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="Domain_Status" value="Need to Buy"> Nahi, aapko setup karna hoga.
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Aapko website kitne din mein live chahiye? *</label>
+                <select name="Timeline" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="2-3 Days (Urgent)">2-3 din mein (Urgent)</option>
+                    <option value="Within 1 Week">1 hafte ke andar</option>
+                    <option value="Flexible">Aaram se banaiye (Flexible)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Aapka anumanit (estimated) budget kya hai? (₹)</label>
+                <input type="text" name="Estimated_Budget" placeholder="e.g. 5000">
+            </div>
+
+            <div class="form-group">
+                <label>Koi extra feature ya sawal? (Optional)</label>
+                <textarea name="Extra_Notes" rows="4" placeholder="Type here..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Requirements</button>
+        </form>
+    </div>
+
+    <script>
+        // JS to change button text on submit so client knows it is processing
+        const form = document.getElementById('clientForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function() {
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending Details...';
+            submitBtn.style.opacity = '0.8';
+            submitBtn.style.pointerEvents = 'none';
+        });
+    </script>
+</body>
+</html>
